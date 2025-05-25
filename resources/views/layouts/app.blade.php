@@ -21,11 +21,7 @@
         <x-banner />
 
         <div class="min-h-screen bg-gray-100">
-            @if (Auth::check())
-                @livewire('navigation-menu')
-            @else
-                @include('layouts.guest-navigation')
-            @endif
+            @livewire('navigation-menu')
 
             <!-- Page Heading -->
             @if (isset($header))
@@ -38,7 +34,7 @@
 
             <!-- Page Content -->
             <main>
-                @yield('content')
+                {{ $slot }}
             </main>
         </div>
 
