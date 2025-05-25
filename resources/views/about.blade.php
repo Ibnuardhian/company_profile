@@ -1,0 +1,12 @@
+@extends('layouts.app')
+
+@section('content')
+<div class="py-12">
+    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-8">
+            <h1 class="text-3xl font-bold mb-4">About Us</h1>
+            <p class="text-gray-700">Ini adalah halaman About Us. Silakan sesuaikan konten ini sesuai dengan profil perusahaan Anda.</p>
+        </div>
+    </div>
+</div>
+@endsection
