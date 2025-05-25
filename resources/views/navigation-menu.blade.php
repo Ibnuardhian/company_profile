@@ -29,6 +29,12 @@
                         <x-nav-link href="{{ url('/about-us') }}" :active="request()->is('about-us')">
                             About us
                         </x-nav-link>
+                        <x-nav-link href="{{ url('/services') }}" :active="request()->is('services')">
+                            Services
+                        </x-nav-link>
+                        <x-nav-link href="{{ url('/our-work') }}" :active="request()->is('our-work')">
+                            Our Work
+                        </x-nav-link>
                     @endif
                 </div>
             </div>
@@ -147,6 +153,13 @@
                 </div>
             </div>
 
+            <!-- Get in Touch Button (Desktop Only) -->
+            <div class="hidden sm:flex sm:items-center">
+                <a href="{{ url('contact-us') }}" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded transition">
+                    Get in Touch
+                </a>
+            </div>
+
             <!-- Hamburger -->
             <div class="-me-2 flex items-center sm:hidden">
                 <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
@@ -168,33 +181,37 @@
                 </x-responsive-nav-link>
             @else
                 <x-responsive-nav-link href="{{ url('/home') }}" :active="request()->is('home') || request()->is('/')">
-                    Ini Home
+                    Home
                 </x-responsive-nav-link>
                 <x-responsive-nav-link href="{{ url('/about-us') }}" :active="request()->is('about-us')">
-                    Ini About us
+                    About us
+                </x-responsive-nav-link>
+                <x-responsive-nav-link href="{{ url('/services') }}" :active="request()->is('services')">
+                    Services
+                </x-responsive-nav-link>
+                <x-responsive-nav-link href="{{ url('/our-work') }}" :active="request()->is('our-work')">
+                    Our Work
+                </x-responsive-nav-link>
+                <x-responsive-nav-link href="{{ url('/contact-us') }}" :active="request()->is('contact-us')">
+                    Contact Us
                 </x-responsive-nav-link>
             @endif
         </div>
 
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">
+            @if (Auth::check())
             <div class="flex items-center px-4">
-                @if (Auth::check() && Laravel\Jetstream\Jetstream::managesProfilePhotos())
+                @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
                     <div class="shrink-0 me-3">
                         <img class="size-10 rounded-full object-cover" src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" />
                     </div>
                 @endif
 
-                @if (Auth::check())
-                    <div>
-                        <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
-                        <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
-                    </div>
-                @else
-                    <div>
-                        <div class="font-medium text-base text-gray-800">Guest</div>
-                    </div>
-                @endif
+                <div>
+                    <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
+                    <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
+                </div>
             </div>
 
             <div class="mt-3 space-y-1">
@@ -220,7 +237,7 @@
                 </form>
 
                 <!-- Team Management -->
-                @if (Laravel\Jetstream\Jetstream::hasTeamFeatures() && Auth::check())
+                @if (Laravel\Jetstream\Jetstream::hasTeamFeatures())
                     <div class="border-t border-gray-200"></div>
 
                     <div class="block px-4 py-2 text-xs text-gray-400">
@@ -252,6 +269,7 @@
                     @endif
                 @endif
             </div>
+            @endif
         </div>
     </div>
 </nav>

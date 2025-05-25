@@ -18,4 +18,8 @@ Route::middleware([
 
 Route::get('/about-us', function () {
     return view('about');
-})->name('about-us-guest');
+})->name('about-us');
+
+Route::view('/services', 'services')->name('services');
+Route::view('/our-work', 'our-work')->name('our-work');
+Route::view('/contact-us', 'contact-us')->name('contact-us');
