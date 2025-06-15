@@ -3,15 +3,14 @@
 namespace App\Livewire;
 
 use Livewire\Component;
-use Illuminate\Support\Facades\Asset;
 
-class Customers extends Component
+class Gallery extends Component
 {
-    public $customers = [];
+    public $images = [];
 
     public function mount()
     {
-        $this->customers = [
+        $this->images = [
             asset('images/meeting.jpg'),
             asset('images/foto-fadhlan.jpg'),
             asset('images/default-no-image.png'),
@@ -26,8 +25,8 @@ class Customers extends Component
 
     public function render()
     {
-        return view('livewire.customers', [
-            'customers' => $this->customers
-        ]);
+        return view('livewire.gallery', [
+            'images' => $this->images,
+        ])->layout('layouts.app');
     }
 }
