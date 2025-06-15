@@ -1,5 +1,5 @@
 <!-- Section Testimoni Card 2 Horizontal -->
-<div class="bg-white min-h-[30vh] py-10">
+<div x-data="{ visible: false }" x-intersect:enter="visible = true" x-intersect:leave="visible = false" :class="{'opacity-0 translate-y-8': !visible, 'opacity-100 translate-y-0': visible}" class="bg-white min-h-[30vh] py-10 transition-all duration-[1500ms] opacity-0 translate-y-8">
     <div class="text-center text-3xl font-bold mb-8 bg-white">TESTIMONI</div>
     <div class="flex flex-col items-center">
         <div class="relative flex w-full max-w-4xl justify-center mb-4">

@@ -1,4 +1,4 @@
-<div x-data="{ visible: false }" x-intersect:enter="visible = true" x-intersect:leave="visible = false" :class="{'opacity-0 translate-y-8': !visible, 'opacity-100 translate-y-0': visible}" class="w-screen min-h-[90vh] flex flex-col justify-center items-center bg-white transition-all duration-[1500ms] opacity-0 translate-y-8">
+<div x-data="{ visible: false }" x-intersect:enter="visible = true" x-intersect:leave="visible = false" :class="{'opacity-0 translate-y-8': !visible, 'opacity-100 translate-y-0': visible}" class="w-screen min-h-screen flex flex-col justify-center items-center bg-white transition-all duration-[1500ms] opacity-0 translate-y-8">
     <h2 class="text-4xl font-bold text-center mb-12">KENAPA MEMILIH LAJOO TRANS?</h2>
     <div class="grid grid-cols-1 md:grid-cols-4 gap-8 w-full max-w-7xl px-4">
         <div class="flex flex-col items-center text-center">
