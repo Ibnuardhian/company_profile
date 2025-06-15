@@ -3,7 +3,7 @@
     $fallback = $fallback ?? '';
     $alt = $alt ?? '';
     $class = $class ?? '';
-    $style = ($style ?? '') . 'width:432px; aspect-ratio:9/10; object-fit:cover;';
+    $style = ($style ?? '') . ' ';
     $imagePath = public_path($src);
 @endphp
 

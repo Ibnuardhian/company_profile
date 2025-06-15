@@ -30,4 +30,9 @@
         </div>
     </div>
     @include('features')
+    @include('about-home')
+    @include('facilities')
+    @include('testimonials')
+    @include('customer')
+    @include('footer')
 </x-app-layout>
