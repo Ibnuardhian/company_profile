@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CustomerController;
 
 Route::view('/', 'home')->name('home');
 
@@ -23,3 +24,4 @@ Route::get('/about-us', function () {
 Route::view('/services', 'services')->name('services');
 Route::view('/our-work', 'our-work')->name('our-work');
 Route::view('/contact-us', 'contact-us')->name('contact-us');
+Route::get('/customer', [CustomerController::class, 'index'])->name('customer');
