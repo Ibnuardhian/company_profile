@@ -29,10 +29,9 @@
             </div>
         </div>
     </div>
-    @include('features')
-    @include('about-home')
-    @include('facilities')
+    @livewire('features')
+    @livewire('about-home')
+    @livewire('facilities')
     @livewire('testimonials')
     @livewire('customers')
-    @include('footer')
 </x-app-layout>

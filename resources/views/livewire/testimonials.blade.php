@@ -18,8 +18,7 @@
                             class="testimonial-card-custom bg-gray-100 rounded-xl w-full p-6 flex flex-col gap-2 items-start shadow-md transition-all duration-500 opacity-0 scale-90"
                             wire:key="testimonial-{{ $index + $i }}-{{ Str::slug($testimonial['nama']) }}"
                             x-data="{ show: false }"
-                            x-init="$nextTick(() => { show = true })"
-                            x-effect="show = false; setTimeout(() => show = true, 10)"
+                            x-intersect:enter="show = true" x-intersect:leave="show = false"
                             :class="show ? 'popup-transition' : 'opacity-0 scale-90'"
                         >
                             <div class="flex items-center gap-3 w-full">

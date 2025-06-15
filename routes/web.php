@@ -1,8 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\CustomerController;
-use App\Livewire\Customers;
+use App\Livewire\About;
 
 Route::view('/', 'home')->name('home');
 
@@ -18,11 +17,7 @@ Route::middleware([
     })->name('dashboard');
 });
 
-Route::get('/about-us', function () {
-    return view('about');
-})->name('about-us');
-
+Route::get('/about-us', About::class)->name('about-us');
 Route::view('/services', 'services')->name('services');
 Route::view('/our-work', 'our-work')->name('our-work');
 Route::view('/contact-us', 'contact-us')->name('contact-us');
-Route::get('/customer', [CustomerController::class, 'index'])->name('customer');

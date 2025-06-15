@@ -1,19 +1,19 @@
-<x-app-layout>
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                <div class="p-6 text-gray-900 text-lg">
-                    Ini About us
-                </div>
-
-                <div class="bg-gray-200 bg-opacity-25 grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 p-6 lg:p-8">
-                    <div>
-                        <div class="flex items">
-                            <!-- Tambahkan konten di sini sesuai kebutuhan -->
-                        </div>
+<div class="mt-24">
+    @if(isset($aboutList) && is_array($aboutList))
+        @foreach($aboutList as $aboutData)
+            <div class="flex flex-col items-center justify-center h-full w-full mb-12">
+                <h1 class="text-4xl font-bold mb-8">{{ $aboutData['title'] ?? 'LAJOO TRANS' }}</h1>
+                <div class="flex flex-row w-full max-w-5xl justify-center items-center gap-8 mx-auto my-auto">
+                    <div class="flex items-center justify-center w-64 h-64">
+                        <x-image-with-fallback src="images/meeting.jpg" fallback="images/default-no-image.png" alt="Foto" class="object-cover w-full h-full rounded-lg shadow-lg" />
+                    </div>
+                    <div class="flex-1 flex flex-col justify-between h-64">
+                        <p class="mb-8 text-justify">
+                            {{ $aboutData['description'] ?? '' }}
+                        </p>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-</x-app-layout>
+        @endforeach
+    @endif
+</div>
