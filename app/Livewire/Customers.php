@@ -1,14 +1,17 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Livewire;
 
-use Illuminate\Http\Request;
+use Livewire\Component;
+use Illuminate\Support\Facades\Asset;
 
-class CustomerController extends Controller
+class Customers extends Component
 {
-    public function index()
+    public $customers = [];
+
+    public function mount()
     {
-        $customers = [
+        $this->customers = [
             [ 'src' => asset('images/foto-fadhlan.jpg'), 'alt' => 'Foto 1', 'label' => 'FOTO1' ],
             [ 'src' => asset('images/meeting.jpg'), 'alt' => 'Foto 2', 'label' => 'FOTO2' ],
             [ 'src' => asset('images/default-no-image.png'), 'alt' => 'Foto 3', 'label' => 'FOTO3' ],
@@ -16,6 +19,12 @@ class CustomerController extends Controller
             [ 'src' => asset('images/meeting.jpg'), 'alt' => 'Foto 5', 'label' => 'FOTO5' ],
             [ 'src' => asset('images/default-no-image.png'), 'alt' => 'Foto 6', 'label' => 'FOTO6' ],
         ];
-        return view('livewire.customers', compact('customers'));
+    }
+
+    public function render()
+    {
+        return view('livewire.customers', [
+            'customers' => $this->customers
+        ]);
     }
 }

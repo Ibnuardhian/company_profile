@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomerController;
+use App\Livewire\Customers;
 
 Route::view('/', 'home')->name('home');
 
