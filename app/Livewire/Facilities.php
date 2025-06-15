@@ -11,7 +11,7 @@ class Facilities extends Component
     public function mount()
     {
         $this->images = [
-            asset('images/meeting.jpg'),
+            asset('images/armada.jpg'),
             // asset('images/default-no-image.png'),
         ];
     }
