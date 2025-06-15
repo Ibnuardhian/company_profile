@@ -12,7 +12,7 @@ class Facilities extends Component
     {
         $this->images = [
             asset('images/meeting.jpg'),
-            asset('images/default-no-image.png'),
+            // asset('images/default-no-image.png'),
         ];
     }
 
