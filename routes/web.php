@@ -18,6 +18,7 @@ Route::middleware([
 });
 
 Route::get('/about-us', About::class)->name('about-us');
-Route::view('/services', 'services')->name('services');
-Route::view('/our-work', 'our-work')->name('our-work');
+Route::view('/armada', 'services')->name('armada');
+Route::view('/daftar-harga', 'daftar-harga')->name('daftar-harga');
+Route::view('/blog', 'blog')->name('blog');
 Route::view('/contact-us', 'contact-us')->name('contact-us');

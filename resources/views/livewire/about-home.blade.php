@@ -1,4 +1,4 @@
-<div x-data="{ visible: false }" x-intersect:enter="visible = true" x-intersect:leave="visible = false" :class="{'opacity-0 translate-y-8': !visible, 'opacity-100 translate-y-0': visible}" class="flex flex-col items-center justify-start py-8 bg-white min-h-[50vh] w-full transition-all duration-[1500ms] opacity-0 translate-y-8">
+<div x-data="{ visible: false }" x-intersect:enter="visible = true" x-intersect:leave="visible = false" :class="{'opacity-0 translate-y-8': !visible, 'opacity-100 translate-y-0': visible}" class="flex flex-col items-center justify-start bg-white min-h-[50vh] w-full transition-all duration-[1500ms] opacity-0 translate-y-8">
     @if (($aboutData['slug'] ?? null) === 'about-us')
     <div class="flex flex-col items-center justify-center h-full w-full px-4 md:px-0">
         <h1 class="text-2xl md:text-4xl font-bold mb-6 md:mb-8 text-center">{{ $aboutData['title'] ?? 'LAJOO TRANS' }}</h1>

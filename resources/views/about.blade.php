@@ -1,4 +1,4 @@
-<div class="mt-24 ">
+<div>
     @if(isset($aboutList) && is_array($aboutList))
         @php
             $aboutHome = collect($aboutList)->firstWhere('slug', 'about-home') ?? collect($aboutList)->firstWhere('slug', 'about-us');
