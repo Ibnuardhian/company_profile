@@ -9,7 +9,7 @@
             </div>
             <div class="flex-1 flex flex-col justify-between h-auto md:h-64 w-full">
                 <p class="mb-6 md:mb-8 text-justify text-sm md:text-base">
-                    {{ $aboutData['description'] ?? '' }}
+                    {!! nl2br(e(\Illuminate\Support\Str::limit($aboutData['description'] ?? '', 600, '...'))) !!}
                 </p>
                 <div class="flex justify-end">
                     <a href="{{ route('about-us') }}">
