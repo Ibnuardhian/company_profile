@@ -4,7 +4,7 @@
         <h1 class="text-2xl md:text-4xl font-bold mb-6 md:mb-8 text-center">{{ $aboutData['title'] ?? 'LAJOO TRANS' }}</h1>
         <div class="flex flex-col md:flex-row w-full max-w-5xl justify-center items-center gap-6 md:gap-8 mx-auto my-auto">
             <div class="flex items-center justify-center w-full md:w-64 h-48 md:h-64 mb-4 md:mb-0">
-                <x-image-with-fallback src="images/meeting.jpg" fallback="images/default-no-image.png" alt="Foto"
+                <x-image-with-fallback src="{{ $aboutData['image_url'] }}" alt="Foto"
                     class="object-cover w-full h-full rounded-lg shadow-lg" />
             </div>
             <div class="flex-1 flex flex-col justify-between h-auto md:h-64 w-full">

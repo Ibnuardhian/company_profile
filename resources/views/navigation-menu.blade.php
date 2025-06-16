@@ -1,4 +1,28 @@
-<nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
+<nav
+    x-data="{
+        open: false,
+        lastScroll: window.pageYOffset,
+        visible: true,
+        handleScroll() {
+            const currentScroll = window.pageYOffset;
+            if (currentScroll <= 0) {
+                this.visible = true;
+                this.lastScroll = 0;
+                return;
+            }
+            if (currentScroll > this.lastScroll) {
+                // Scroll down
+                this.visible = false;
+            } else {
+                // Scroll up
+                this.visible = true;
+            }
+            this.lastScroll = currentScroll;
+        }
+    }"
+    x-init="window.addEventListener('scroll', () => handleScroll())"
+    :class="[visible ? 'sticky top-0 z-50 transition-transform duration-300' : 'sticky top-0 z-50 -translate-y-full transition-transform duration-300', 'bg-white border-b border-gray-100']"
+>
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-28"> <!-- Ubah h-16 menjadi h-28 untuk navbar lebih tinggi -->
