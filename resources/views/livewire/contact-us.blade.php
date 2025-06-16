@@ -1,4 +1,4 @@
-<div x-data="{ visible: false }" x-intersect:enter="visible = true" x-intersect:leave="visible = false" :class="{'opacity-0 translate-y-8': !visible, 'opacity-100 translate-y-0': visible}" class="bg-white min-h-[30vh] py-10 transition-all duration-[1500ms] opacity-0 translate-y-8">
+<div x-data="{ visible: false }" x-intersect:enter="visible = true" x-intersect:leave="visible = false" :class="{'opacity-0 translate-y-8': !visible, 'opacity-100 translate-y-0': visible}" class="bg-white min-h-[30vh] py-10 px-4 md:px-0 transition-all duration-[1500ms] opacity-0 translate-y-8">
     <div class="flex flex-col md:flex-row justify-center items-start gap-8 w-full max-w-5xl mx-auto">
         <!-- Left: Accordion Questions -->
         <div class="w-full md:w-1/2">

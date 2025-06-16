@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Livewire\About;
+use App\Livewire\Blog;
+use App\Livewire\BlogDetail;
 
 Route::view('/', 'home')->name('home');
 
@@ -20,5 +22,6 @@ Route::middleware([
 Route::get('/about-us', About::class)->name('about-us');
 Route::view('/armada', 'services')->name('armada');
 Route::view('/daftar-harga', 'daftar-harga')->name('daftar-harga');
-Route::view('/blog', 'blog')->name('blog');
+Route::get('/blog', Blog::class)->name('blog');
+Route::get('/blog/{slug}', BlogDetail::class)->name('blog.detail');
 Route::view('/contact-us', 'contact-us')->name('contact-us');
