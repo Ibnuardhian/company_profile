@@ -25,7 +25,6 @@ class CompanyProfile extends Model
         'description',
         'vision',
         'mission',
-        'primary_color',
         'address',
         'pool_address',
         'google_maps_embed_url',

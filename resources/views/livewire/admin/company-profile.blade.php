@@ -143,6 +143,16 @@
                 </div>
             </div>
 
+            <!-- Submit Button -->
+            <div class="mt-6 flex justify-end">
+                <button wire:click="save()" 
+                        onclick="console.log('=== SUBMIT BUTTON CLICKED ==='); console.log('Timestamp:', new Date().toLocaleString()); console.log('Current form data:', { name: @js($name), description: @js($description), vision: @js($vision), mission: @js($mission), address: @js($address), pool_address: @js($pool_address) }); console.log('=== END SUBMIT LOG ===');"
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg transition duration-200 ease-in-out transform hover:scale-105">
+                    <i class="fas fa-save mr-2"></i>
+                    Save Changes
+                </button>
+            </div>
+
             <!-- Contact Informations-->
             @if($companyProfile && $companyProfile->contacts && count($companyProfile->contacts) > 0)
                 <div class="mt-8">

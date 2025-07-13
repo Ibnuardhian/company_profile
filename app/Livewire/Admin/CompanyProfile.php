@@ -20,11 +20,8 @@ class CompanyProfile extends Component
     public $description;
     public $vision;
     public $mission;
-    public $primary_color;
     public $address;
     public $pool_address;
-    public $phone_numbers = [];
-    public $email;
     public $google_maps_embed_url;
 
     // Contact properties
@@ -44,11 +41,8 @@ class CompanyProfile extends Component
             $this->description = $this->companyProfile->description;
             $this->vision = $this->companyProfile->vision;
             $this->mission = $this->companyProfile->mission;
-            $this->primary_color = $this->companyProfile->primary_color;
             $this->address = $this->companyProfile->address;
             $this->pool_address = $this->companyProfile->pool_address;
-            $this->phone_numbers = $this->companyProfile->phone_numbers ?? [];
-            $this->email = $this->companyProfile->email;
             $this->google_maps_embed_url = $this->companyProfile->google_maps_embed_url;
         }
     }
@@ -60,6 +54,13 @@ class CompanyProfile extends Component
 
     public function save()
     {
+        // Add logging
+        \Log::info('Save method called', [
+            'name' => $this->name,
+            'description' => $this->description,
+            'has_company_profile' => !is_null($this->companyProfile)
+        ]);
+
         // For auto-save, we'll use more lenient validation
         $this->validate([
             'name' => 'nullable|string|max:255',
@@ -68,38 +69,67 @@ class CompanyProfile extends Component
             'description' => 'nullable|string',
             'vision' => 'nullable|string',
             'mission' => 'nullable|string',
-            'primary_color' => 'nullable|string',
             'address' => 'nullable|string',
             'pool_address' => 'nullable|string',
-            'phone_numbers' => 'nullable|array',
-            'phone_numbers.*' => 'nullable|string|max:20',
-            'email' => 'nullable|email|max:255',
             'google_maps_embed_url' => 'nullable|url',
         ]);
 
-        // Filter out empty phone numbers
-        $this->phone_numbers = array_filter($this->phone_numbers, function($phone) {
-            return !empty(trim($phone));
-        });
-
-        $data = [
-            'name' => $this->name,
-            'logo_path' => $this->logo_path,
-            'description' => $this->description,
-            'vision' => $this->vision,
-            'mission' => $this->mission,
-            'primary_color' => $this->primary_color,
-            'address' => $this->address,
-            'pool_address' => $this->pool_address,
-            'phone_numbers' => array_values($this->phone_numbers), 
-            'email' => $this->email,
-            'google_maps_embed_url' => $this->google_maps_embed_url,
-        ];
-
-        if ($this->companyProfile) {
-            $this->companyProfile->update($data);
-        } else {
+        if (!$this->companyProfile) {
+            // Create new company profile if it doesn't exist
+            $data = [
+                'name' => $this->name,
+                'logo_path' => $this->logo_path,
+                'description' => $this->description,
+                'vision' => $this->vision,
+                'mission' => $this->mission,
+                'address' => $this->address,
+                'pool_address' => $this->pool_address,
+                'google_maps_embed_url' => $this->google_maps_embed_url,
+            ];
+            
+            \Log::info('Creating new company profile', $data);
             $this->companyProfile = CompanyProfileModel::create($data);
+            \Log::info('Company profile created with ID: ' . $this->companyProfile->id);
+        } else {
+            // Only update fields that have changed
+            $dataToUpdate = [];
+            
+            if ($this->name !== $this->companyProfile->name) {
+                $dataToUpdate['name'] = $this->name;
+            }
+            if ($this->logo_path !== $this->companyProfile->logo_path) {
+                $dataToUpdate['logo_path'] = $this->logo_path;
+            }
+            if ($this->description !== $this->companyProfile->description) {
+                $dataToUpdate['description'] = $this->description;
+            }
+            if ($this->vision !== $this->companyProfile->vision) {
+                $dataToUpdate['vision'] = $this->vision;
+            }
+            if ($this->mission !== $this->companyProfile->mission) {
+                $dataToUpdate['mission'] = $this->mission;
+            }
+            if ($this->address !== $this->companyProfile->address) {
+                $dataToUpdate['address'] = $this->address;
+            }
+            if ($this->pool_address !== $this->companyProfile->pool_address) {
+                $dataToUpdate['pool_address'] = $this->pool_address;
+            }
+            if ($this->google_maps_embed_url !== $this->companyProfile->google_maps_embed_url) {
+                $dataToUpdate['google_maps_embed_url'] = $this->google_maps_embed_url;
+            }
+
+            \Log::info('Fields to update', $dataToUpdate);
+
+            // Only run update if there are changes
+            if (!empty($dataToUpdate)) {
+                $this->companyProfile->update($dataToUpdate);
+                \Log::info('Company profile updated successfully');
+                // Refresh the model with fresh data from database
+                $this->companyProfile->refresh();
+            } else {
+                \Log::info('No changes detected, skipping update');
+            }
         }
 
         // Don't close edit form or show flash message for auto-save
@@ -122,24 +152,10 @@ class CompanyProfile extends Component
             $this->description = $this->companyProfile->description;
             $this->vision = $this->companyProfile->vision;
             $this->mission = $this->companyProfile->mission;
-            $this->primary_color = $this->companyProfile->primary_color;
             $this->address = $this->companyProfile->address;
             $this->pool_address = $this->companyProfile->pool_address;
-            $this->phone_numbers = $this->companyProfile->phone_numbers ?? [];
-            $this->email = $this->companyProfile->email;
             $this->google_maps_embed_url = $this->companyProfile->google_maps_embed_url;
         }
-    }
-
-    public function addPhoneNumber()
-    {
-        $this->phone_numbers[] = '';
-    }
-
-    public function removePhoneNumber($index)
-    {
-        unset($this->phone_numbers[$index]);
-        $this->phone_numbers = array_values($this->phone_numbers); // Reindex array
     }
 
     // Contact Management Methods
