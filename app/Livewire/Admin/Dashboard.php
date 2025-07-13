@@ -3,12 +3,28 @@
 namespace App\Livewire\Admin;
 
 use Livewire\Component;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class dashboard extends Component
 {
-    public function render()
+    use AuthorizesRequests;
+    public function __construct()
     {
-        return view('livewire.admin.dashboard')
-            ->layout('layouts.admin');
+        // Menggunakan middleware permission
+        $this->middleware('permission:view dashboard');
+    }
+
+    public function dashboard()
+    {
+        return view('admin.dashboard');
+    }
+        public function users()
+    {
+        // Check permission dalam method
+        if (!auth()->user()->can('manage users')) {
+            abort(403, 'Unauthorized');
+        }
+
+        return view('admin.users');
     }
 }

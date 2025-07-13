@@ -42,28 +42,27 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:flex justify-center w-full">
+                    <x-nav-link href="{{ url('/home') }}" :active="request()->is('home') || request()->is('/')">
+                        Home
+                    </x-nav-link>
+                    <x-nav-link href="{{ url('/about-us') }}" :active="request()->is('about-us')">
+                        Tentang
+                    </x-nav-link>
+                    <x-nav-link href="{{ url('/armada') }}" :active="request()->is('armada')">
+                        Armada
+                    </x-nav-link>
+                    <x-nav-link href="{{ url('/daftar-harga') }}" :active="request()->is('daftar-harga')">
+                        Daftar Harga
+                    </x-nav-link>
+                    <x-nav-link href="{{ url('/blog') }}" :active="request()->is('blog')">
+                        Blog
+                    </x-nav-link>
+                    <x-nav-link href="{{ url('/contact-us') }}" :active="request()->is('contact-us')">
+                        Hubungi Kami
+                    </x-nav-link>
                     @if (Auth::check())
                         <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                             {{ __('Dashboard') }}
-                        </x-nav-link>
-                    @else
-                        <x-nav-link href="{{ url('/home') }}" :active="request()->is('home') || request()->is('/')">
-                            Home
-                        </x-nav-link>
-                        <x-nav-link href="{{ url('/about-us') }}" :active="request()->is('about-us')">
-                            Tentang
-                        </x-nav-link>
-                        <x-nav-link href="{{ url('/armada') }}" :active="request()->is('armada')">
-                            Armada
-                        </x-nav-link>
-                        <x-nav-link href="{{ url('/daftar-harga') }}" :active="request()->is('daftar-harga')">
-                            Daftar Harga
-                        </x-nav-link>
-                        <x-nav-link href="{{ url('/blog') }}" :active="request()->is('blog')">
-                            Blog
-                        </x-nav-link>
-                        <x-nav-link href="{{ url('/contact-us') }}" :active="request()->is('contact-us')">
-                            Hubungi Kami
                         </x-nav-link>
                     @endif
                 </div>
@@ -205,28 +204,27 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link href="{{ url('/home') }}" :active="request()->is('home') || request()->is('/')">
+                Home
+            </x-responsive-nav-link>
+            <x-responsive-nav-link href="{{ url('/about-us') }}" :active="request()->is('about-us')">
+                Tentang
+            </x-responsive-nav-link>
+            <x-responsive-nav-link href="{{ url('/armada') }}" :active="request()->is('armada')">
+                Armada
+            </x-responsive-nav-link>
+            <x-responsive-nav-link href="{{ url('/daftar-harga') }}" :active="request()->is('daftar-harga')">
+                Daftar Harga
+            </x-responsive-nav-link>
+            <x-responsive-nav-link href="{{ url('/blog') }}" :active="request()->is('blog')">
+                Blog
+            </x-responsive-nav-link>
+            <x-responsive-nav-link href="{{ url('/contact-us') }}" :active="request()->is('contact-us')">
+                Hubungi Kami
+            </x-responsive-nav-link>
             @if (Auth::check())
                 <x-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                     {{ __('Dashboard') }}
-                </x-responsive-nav-link>
-            @else
-                <x-responsive-nav-link href="{{ url('/home') }}" :active="request()->is('home') || request()->is('/')">
-                    Home
-                </x-responsive-nav-link>
-                <x-responsive-nav-link href="{{ url('/about-us') }}" :active="request()->is('about-us')">
-                    Tentang
-                </x-responsive-nav-link>
-                <x-responsive-nav-link href="{{ url('/armada') }}" :active="request()->is('armada')">
-                    Armada
-                </x-responsive-nav-link>
-                <x-responsive-nav-link href="{{ url('/daftar-harga') }}" :active="request()->is('daftar-harga')">
-                    Daftar Harga
-                </x-responsive-nav-link>
-                <x-responsive-nav-link href="{{ url('/blog') }}" :active="request()->is('blog')">
-                    Blog
-                </x-responsive-nav-link>
-                <x-responsive-nav-link href="{{ url('/contact-us') }}" :active="request()->is('contact-us')">
-                    Hubungi Kami
                 </x-responsive-nav-link>
             @endif
         </div>

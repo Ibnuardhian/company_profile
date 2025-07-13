@@ -71,6 +71,17 @@
                                                         Dashboard
                                                     </a>
                                                 </li>
+                                                @can('edit company profile')
+                                                <li>
+                                                    <a href="#" 
+                                                       @click="slideOverOpen = false"
+                                                       class="flex items-center px-4 py-3 text-sm rounded-lg {{ request()->routeIs('company.profile.edit') ? 'bg-gray-700 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} transition-colors duration-200">
+                                                        <i class="fas fa-building mr-3 w-5"></i>
+                                                        Company Profile
+                                                    </a>
+                                                </li>
+                                                @endcan
+                                                @can('manage users')
                                                 <li>
                                                     <a href="#" 
                                                        @click="slideOverOpen = false"
@@ -79,6 +90,7 @@
                                                         Users
                                                     </a>
                                                 </li>
+                                                @endcan
                                                 <li>
                                                     <a href="#" 
                                                        @click="slideOverOpen = false"
