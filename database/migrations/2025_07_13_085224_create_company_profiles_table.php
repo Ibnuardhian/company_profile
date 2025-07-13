@@ -23,8 +23,6 @@ return new class extends Migration
             // Contact Information
             $table->text('address')->nullable()->comment('Alamat perusahaan');
             $table->text('pool_address')->nullable()->comment('Alamat pool');
-            $table->json('phone_numbers')->nullable()->comment('Array nomor telepon/WhatsApp');
-            $table->string('email', 255)->nullable()->comment('Email perusahaan');
             $table->text('google_maps_embed_url')->nullable()->comment('URL embed Google Maps');
             
             $table->timestamps();

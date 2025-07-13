@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class CompanyProfile extends Model
 {
@@ -27,8 +28,6 @@ class CompanyProfile extends Model
         'primary_color',
         'address',
         'pool_address',
-        'phone_numbers',
-        'email',
         'google_maps_embed_url',
     ];
 
@@ -40,8 +39,23 @@ class CompanyProfile extends Model
     protected $casts = [
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
-        'phone_numbers' => 'array',
     ];
+
+    /**
+     * Get the contacts for the company profile.
+     */
+    public function contacts(): HasMany
+    {
+        return $this->hasMany(Contact::class);
+    }
+
+    /**
+     * Get active contacts for the company profile.
+     */
+    public function activeContacts(): HasMany
+    {
+        return $this->contacts()->active()->ordered();
+    }
 
     /**
      * Get the logo URL.
@@ -56,16 +70,34 @@ class CompanyProfile extends Model
      */
     public function getFormattedPhoneNumbersAttribute(): array
     {
-        if (!$this->phone_numbers) {
-            return [];
-        }
+        $phoneContacts = $this->activeContacts()
+            ->whereIn('type', ['phone', 'whatsapp'])
+            ->get();
 
-        return collect($this->phone_numbers)->map(function ($phone, $index) {
+        return $phoneContacts->map(function ($contact, $index) {
             return [
-                'label' => 'Telepon ' . ($index + 1),
-                'number' => $phone
+                'label' => $contact->label ?: ('Telepon ' . ($index + 1)),
+                'number' => $contact->value,
+                'type' => $contact->type
             ];
         })->toArray();
+    }
+
+    /**
+     * Get primary email.
+     */
+    public function getPrimaryEmailAttribute(): string
+    {
+        $email = $this->activeContacts()->byType('email')->primary()->first();
+        return $email ? $email->value : 'Data belum diisi';
+    }
+
+    /**
+     * Get email with default value (for backward compatibility).
+     */
+    public function getEmailAttribute(): string
+    {
+        return $this->getPrimaryEmailAttribute();
     }
 
     /**
@@ -88,14 +120,6 @@ class CompanyProfile extends Model
      * Get pool address with default value.
      */
     public function getPoolAddressAttribute($value): string
-    {
-        return $value ?: 'Data belum diisi';
-    }
-
-    /**
-     * Get email with default value.
-     */
-    public function getEmailAttribute($value): string
     {
         return $value ?: 'Data belum diisi';
     }

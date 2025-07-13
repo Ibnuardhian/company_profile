@@ -6,10 +6,14 @@ use App\Livewire\Blog;
 use App\Livewire\BlogDetail;
 use App\Livewire\Admin\Dashboard;
 use App\Livewire\Admin\CompanyProfile;
+use App\Http\Controllers\FooterController;
 
 Route::view('/', 'home')->name('home');
 
 Route::view('/home', 'home');
+
+// Test route for footer
+Route::get('/footer-test', [FooterController::class, 'index'])->name('footer.test');
 
 Route::middleware([
     'auth:sanctum',
