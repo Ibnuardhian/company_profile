@@ -39,7 +39,7 @@ class Features extends Component
 
     public function render()
     {
-        return view('livewire.features', [
+        return view('livewire.guest.features', [
             'features' => $this->features
         ]);
     }

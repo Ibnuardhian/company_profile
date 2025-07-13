@@ -25,7 +25,7 @@ class Gallery extends Component
 
     public function render()
     {
-        return view('livewire.gallery', [
+        return view('livewire.guest.gallery', [
             'images' => $this->images,
         ])->layout('layouts.app');
     }

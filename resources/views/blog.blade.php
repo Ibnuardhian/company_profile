@@ -1,3 +1,3 @@
 <x-app-layout>
-@livewire('blog')
+@livewire('guest.blog')
 </x-app-layout>

@@ -19,7 +19,7 @@ class Facilities extends Component
 
     public function render()
     {
-        return view('livewire.facilities', [
+        return view('livewire.guest.facilities', [
             'images' => $this->images,
         ]);
     }

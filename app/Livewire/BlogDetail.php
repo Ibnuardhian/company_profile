@@ -40,6 +40,6 @@ class BlogDetail extends Component
 
     public function render()
     {
-        return view('livewire.blog-detail')->layout('layouts.app');
+        return view('livewire.guest.blog-detail')->layout('layouts.app');
     }
 }

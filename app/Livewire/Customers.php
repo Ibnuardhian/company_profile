@@ -26,7 +26,7 @@ class Customers extends Component
 
     public function render()
     {
-        return view('livewire.customers', [
+        return view('livewire.guest.customers', [
             'customers' => $this->customers
         ]);
     }

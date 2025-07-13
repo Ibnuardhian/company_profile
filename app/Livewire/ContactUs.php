@@ -31,6 +31,6 @@ class ContactUs extends Component
 
     public function render()
     {
-        return view('livewire.contact-us');
+        return view('livewire.guest.contact-us');
     }
 }

@@ -16,7 +16,7 @@ class Price extends Component
     
     public function render()
     {
-        return view('livewire.price',[
+        return view('livewire.guest.price',[
             'images' => $this->images,
         ]);
     }

@@ -21,7 +21,7 @@ class Carousel extends Component
 
     public function render()
     {
-        return view('livewire.carousel', [
+        return view('livewire.guest.carousel', [
             'images' => $this->images,
         ]);
     }

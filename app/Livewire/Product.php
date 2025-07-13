@@ -59,6 +59,6 @@ class Product extends Component
                 'price' => 'Rp 500.000 - Rp 700.000'
             ],
         ];
-        return view('livewire.product', compact('products'));
+        return view('livewire.guest.product', compact('products'));
     }
 }

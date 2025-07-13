@@ -28,7 +28,7 @@ class AboutHome extends Component
 
     public function render()
     {
-        return view('livewire.about-home', [
+        return view('livewire.guest.about-home', [
             'aboutData' => $this->aboutData,
         ]);
     }
