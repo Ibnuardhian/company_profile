@@ -41,13 +41,6 @@ Route::middleware(['auth:sanctum', 'verified'])->prefix('admin')->name('admin.')
         Route::get('/company-profile', CompanyProfile::class)->name('company-profile');
     });
 
-    // About Company - Company Admin and Company User
-    Route::middleware('permission:edit about company')->group(function () {
-        Route::get('/about', function() {
-            return view('livewire.admin.about');
-        })->name('about');
-    });
-
     // Banner Management
     Route::middleware('permission:edit banner')->group(function () {
         Route::get('/banner', function() {

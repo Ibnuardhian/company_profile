@@ -19,9 +19,8 @@ Sistem ini menggunakan Spatie Laravel Permission untuk mengatur role dan permiss
 
 **Permissions:**
 - `manage users` - Mengelola user internal perusahaan
-- `edit company profile` - Edit logo, nama perusahaan, visi misi
-- `view company profile`
-- `edit about company`
+- `view company profile` - Melihat profil perusahaan
+- `manage company profile` - Mengelola seluruh profil perusahaan (termasuk about, logo, nama, visi misi)
 - `edit banner`
 - `manage gallery`
 - `manage pricing catalog`
@@ -39,7 +38,7 @@ Sistem ini menggunakan Spatie Laravel Permission untuk mengatur role dan permiss
 
 **Permissions:**
 - `view company profile`
-- `edit about company`
+- `manage company profile`
 - `edit banner`
 - `manage gallery`
 - `manage pricing catalog`
@@ -176,9 +175,8 @@ routes/
 | Permission | Description |
 |------------|-------------|
 | `manage users` | Kelola user internal perusahaan |
-| `edit company profile` | Edit logo, nama, visi misi perusahaan |
 | `view company profile` | Lihat profil perusahaan |
-| `edit about company` | Edit tentang perusahaan |
+| `manage company profile` | Kelola seluruh profil perusahaan (termasuk about, logo, nama, visi misi) |
 | `edit banner` | Edit banner website |
 | `manage gallery` | Kelola galeri foto |
 | `manage pricing catalog` | Kelola katalog harga |

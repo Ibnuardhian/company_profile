@@ -25,9 +25,6 @@ class RolePermissionSeeder extends Seeder
             'view company profile',
             'manage company profile',
             
-            // About Company
-            'edit about company',
-            
             // Banner Management
             'edit banner',
             
@@ -70,7 +67,6 @@ class RolePermissionSeeder extends Seeder
             'manage users',
             'view company profile',
             'manage company profile',
-            'edit about company',
             'edit banner',
             'manage gallery',
             'manage pricing catalog',
@@ -87,7 +83,6 @@ class RolePermissionSeeder extends Seeder
         $companyUserRole->givePermissionTo([
             'view company profile',
             'manage company profile',
-            'edit about company',
             'edit banner',
             'manage gallery',
             'manage pricing catalog',

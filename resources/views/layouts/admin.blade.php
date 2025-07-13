@@ -72,7 +72,7 @@
                                                     Dashboard
                                                 </a>
                                             </li>
-                                            @can('manage company profile')
+                                            @can('view company profile')
                                                 <li>
                                                     <a href="{{ route('admin.company-profile') }}" @click="slideOverOpen = false"
                                                         class="flex items-center px-4 py-3 text-sm rounded-lg {{ request()->routeIs('admin.company.profile.edit') ? 'bg-gray-700 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} transition-colors duration-200">
