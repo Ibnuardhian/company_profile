@@ -1,20 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Livewire\Admin;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use Livewire\Component;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Routing\Controller as BaseController;
 
-class AdminController extends Controller
+class AdminController extends Component
 {
     use AuthorizesRequests;
-    public function __construct()
-    {
-        // Menggunakan middleware permission
-        $this->middleware('permission:view dashboard');
-    }
+
     public function users()
     {
         // Check permission dalam method
@@ -58,5 +52,10 @@ class AdminController extends Controller
         $this->authorize('manage blog');
         
         return view('admin.create-blog');
+    }
+
+    public function render()
+    {
+        return view('livewire.admin.admin-controller');
     }
 }

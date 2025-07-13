@@ -1,5 +1,3 @@
-@extends('layouts.admin')
-
 @section('page-title', 'Dashboard')
 
 @section('content')

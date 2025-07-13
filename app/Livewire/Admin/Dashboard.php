@@ -5,7 +5,7 @@ namespace App\Livewire\Admin;
 use Livewire\Component;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
-class dashboard extends Component
+class Dashboard extends Component
 {
     use AuthorizesRequests;
     public function __construct()
@@ -25,6 +25,6 @@ class dashboard extends Component
             abort(403, 'Unauthorized');
         }
 
-        return view('admin.users');
+        return view('admin.users')->layout('layouts.admin');
     }
 }
