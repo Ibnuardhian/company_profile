@@ -3,7 +3,6 @@
 @section('page-title', 'Dashboard')
 
 @section('content')
-<div class="space-y-6">
     <!-- Welcome Section -->
     <div class="bg-white rounded-lg shadow p-6">
         <div class="flex items-center justify-between">

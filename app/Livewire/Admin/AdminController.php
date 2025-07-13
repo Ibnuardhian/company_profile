@@ -15,12 +15,6 @@ class AdminController extends Controller
         // Menggunakan middleware permission
         $this->middleware('permission:view dashboard');
     }
-
-    public function dashboard()
-    {
-        return view('admin.dashboard');
-    }
-
     public function users()
     {
         // Check permission dalam method

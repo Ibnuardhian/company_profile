@@ -22,8 +22,8 @@ class RolePermissionSeeder extends Seeder
             'manage users',
             
             // Company Profile Management
-            'edit company profile',
             'view company profile',
+            'manage company profile',
             
             // About Company
             'edit about company',
@@ -68,8 +68,8 @@ class RolePermissionSeeder extends Seeder
         $companyAdminRole = Role::create(['name' => 'company admin']);
         $companyAdminRole->givePermissionTo([
             'manage users',
-            'edit company profile',
             'view company profile',
+            'manage company profile',
             'edit about company',
             'edit banner',
             'manage gallery',
@@ -86,6 +86,7 @@ class RolePermissionSeeder extends Seeder
         $companyUserRole = Role::create(['name' => 'company user']);
         $companyUserRole->givePermissionTo([
             'view company profile',
+            'manage company profile',
             'edit about company',
             'edit banner',
             'manage gallery',
