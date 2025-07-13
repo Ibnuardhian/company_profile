@@ -8,23 +8,15 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 class Dashboard extends Component
 {
     use AuthorizesRequests;
-    public function __construct()
+
+    public function mount()
     {
-        // Menggunakan middleware permission
-        $this->middleware('permission:view dashboard');
+        // Check permission saat component dimount
+        $this->authorize('view dashboard');
     }
 
-    public function dashboard()
+    public function render()
     {
-        return view('admin.dashboard');
-    }
-        public function users()
-    {
-        // Check permission dalam method
-        if (!auth()->user()->can('manage users')) {
-            abort(403, 'Unauthorized');
-        }
-
-        return view('admin.users')->layout('layouts.admin');
+        return view('livewire.admin.dashboard')->layout('layouts.admin');
     }
 }

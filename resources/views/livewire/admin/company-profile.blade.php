@@ -1,6 +1,3 @@
-@section('page-title', 'Dashboard')
-
-@section('content')
 <div class="space-y-6">
     <!-- Welcome Section -->
     <div class="bg-white shadow-lg rounded-lg p-6">
@@ -79,12 +76,12 @@
             <!-- Mission & Vision -->
             <div class="mt-8 space-y-6">
                 <div>
-                    <h2 class="text-xl font-semibold text-gray-700 border-b pb-2">Mission</h2>
+                    <h2 class="text-xl font-semibold text-gray-700 border-b pb-2">Misi</h2>
                     <p class="mt-3 text-gray-800">{{ $companyProfile->mission ?? 'No mission statement set' }}</p>
                 </div>
                 
                 <div>
-                    <h2 class="text-xl font-semibold text-gray-700 border-b pb-2">Vision</h2>
+                    <h2 class="text-xl font-semibold text-gray-700 border-b pb-2">Visi</h2>
                     <p class="mt-3 text-gray-800">{{ $companyProfile->vision ?? 'No vision statement set' }}</p>
                 </div>
             </div>

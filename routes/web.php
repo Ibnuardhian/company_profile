@@ -16,19 +16,15 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('livewire.admin.dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', Dashboard::class)->name('dashboard');
 });
 
 // Admin routes dengan permission middleware
 Route::middleware(['auth:sanctum', 'verified'])->prefix('admin')->name('admin.')->group(function () {
     
     // Dashboard - accessible by all authenticated users with dashboard permission
-    Route::get('/dashboard', Dashboard::class)
-        ->middleware('permission:view dashboard')
-        ->name('dashboard');
-
+    // Route ini sudah tidak diperlukan karena dashboard utama sudah menggunakan Livewire component
+    
     // User Management - Only Company Admin and Superadmin
     Route::middleware('permission:manage users')->group(function () {
         Route::get('/users', function() {

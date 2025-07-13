@@ -4,7 +4,9 @@
         <!-- Logo & Description -->
         <div class="md:w-1/3 flex flex-col">
             <div class="mb-4">
-                <span class="text-6xl text-white">Lajoo Trans</span>
+                <span class="text-6xl text-white">
+                    {{ \DB::table('company_profile')->value('name') }}
+                </span>
             </div>
             <p class="mb-4">We are a young company always looking for new and creative ideas to help you with our products in your everyday work.</p>
             <a href="#" class="text-green-400 hover:underline">Our Team</a>

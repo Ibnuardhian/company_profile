@@ -1,6 +1,4 @@
-@section('page-title', 'Dashboard')
-
-@section('content')
+<div>
     <!-- Welcome Section -->
     <div class="bg-white rounded-lg shadow p-6">
         <div class="flex items-center justify-between">
@@ -283,4 +281,3 @@
         </div>
     </div>
 </div>
-@endsection

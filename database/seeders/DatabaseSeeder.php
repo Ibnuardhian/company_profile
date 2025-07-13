@@ -15,6 +15,8 @@ class DatabaseSeeder extends Seeder
     {
         // Seed roles and permissions first
         $this->call(RolePermissionSeeder::class);
+        // Seed company profile
+        $this->call(CompanyProfileSeeder::class);
 
         // User::factory(10)->create();
 

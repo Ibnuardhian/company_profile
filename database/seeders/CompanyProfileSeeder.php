@@ -19,6 +19,8 @@ class CompanyProfileSeeder extends Seeder
             'vision' => 'Menjadi perusahaan teknologi terkemuka di Indonesia yang memberikan solusi terbaik untuk kemajuan digitalisasi.',
             'mission' => 'Mengembangkan teknologi berkualitas tinggi, memberikan pelayanan terbaik kepada klien, dan berkontribusi pada kemajuan teknologi Indonesia.',
             'primary_color' => '#3B82F6',
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
     }
 }
