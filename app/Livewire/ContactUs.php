@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\CompanyProfile;
 use Livewire\Component;
 
 class ContactUs extends Component
@@ -28,6 +29,13 @@ class ContactUs extends Component
             'a' => 'Pembayaran dapat dilakukan melalui transfer bank, tunai, atau metode pembayaran digital.'
         ],
     ];
+
+    public $companyProfile;
+
+    public function mount()
+    {
+        $this->companyProfile = CompanyProfile::main();
+    }
 
     public function render()
     {

@@ -19,6 +19,14 @@ return new class extends Migration
             $table->text('vision')->nullable()->comment('Visi');
             $table->text('mission')->nullable()->comment('Misi');
             $table->string('primary_color', 7)->nullable()->default('#FF0000')->comment('Contoh: #FF0000');
+            
+            // Contact Information
+            $table->text('address')->nullable()->comment('Alamat perusahaan');
+            $table->text('pool_address')->nullable()->comment('Alamat pool');
+            $table->json('phone_numbers')->nullable()->comment('Array nomor telepon/WhatsApp');
+            $table->string('email', 255)->nullable()->comment('Email perusahaan');
+            $table->text('google_maps_embed_url')->nullable()->comment('URL embed Google Maps');
+            
             $table->timestamps();
         });
     }

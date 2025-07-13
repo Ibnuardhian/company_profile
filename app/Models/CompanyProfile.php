@@ -25,6 +25,11 @@ class CompanyProfile extends Model
         'vision',
         'mission',
         'primary_color',
+        'address',
+        'pool_address',
+        'phone_numbers',
+        'email',
+        'google_maps_embed_url',
     ];
 
     /**
@@ -35,6 +40,7 @@ class CompanyProfile extends Model
     protected $casts = [
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
+        'phone_numbers' => 'array',
     ];
 
     /**
@@ -43,6 +49,55 @@ class CompanyProfile extends Model
     public function getLogoUrlAttribute(): ?string
     {
         return $this->logo_path ? asset('storage/' . $this->logo_path) : null;
+    }
+
+    /**
+     * Get formatted phone numbers with labels.
+     */
+    public function getFormattedPhoneNumbersAttribute(): array
+    {
+        if (!$this->phone_numbers) {
+            return [];
+        }
+
+        return collect($this->phone_numbers)->map(function ($phone, $index) {
+            return [
+                'label' => 'Telepon ' . ($index + 1),
+                'number' => $phone
+            ];
+        })->toArray();
+    }
+
+    /**
+     * Get company name with default value.
+     */
+    public function getNameAttribute($value): string
+    {
+        return $value ?: 'Data belum diisi';
+    }
+
+    /**
+     * Get address with default value.
+     */
+    public function getAddressAttribute($value): string
+    {
+        return $value ?: 'Data belum diisi';
+    }
+
+    /**
+     * Get pool address with default value.
+     */
+    public function getPoolAddressAttribute($value): string
+    {
+        return $value ?: 'Data belum diisi';
+    }
+
+    /**
+     * Get email with default value.
+     */
+    public function getEmailAttribute($value): string
+    {
+        return $value ?: 'Data belum diisi';
     }
 
     /**
