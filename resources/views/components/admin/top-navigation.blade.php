@@ -2,7 +2,7 @@
 <header class="bg-white shadow-sm border-b border-gray-200">
     <div class="flex items-center justify-between px-6 py-4">
         <div class="flex items-center">
-            <button @click="slideOverOpen = true" type="button"
+            <button onclick="openSlideover()" type="button"
                 class="inline-flex items-center justify-center h-10 px-4 py-2 text-sm font-medium transition-colors bg-white border rounded-md hover:bg-gray-50 active:bg-white focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/60 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none">
                 <i class="fas fa-bars mr-2"></i>
                 Menu
