@@ -8,7 +8,7 @@ class FooterController extends \Livewire\Component
 {
     public function getContacts()
     {
-        return DB::table('contacts')->get();
+        return DB::table('contacts')->where('is_primary', 1)->get();
     }
 
     public function getIconByType($type)

@@ -24,7 +24,7 @@
                 
                 <!-- Dynamic contacts from contacts table -->
                 @php
-                    $contacts = \DB::table('contacts')->get();
+                    $contacts = \DB::table('contacts')->where('is_primary', 1)->get();
                 @endphp
                 
                 @foreach($contacts as $contact)
