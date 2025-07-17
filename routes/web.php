@@ -1,11 +1,14 @@
 <?php
 
+use App\Livewire\Admin\CompanyProfile;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\About;
 use App\Livewire\Blog;
 use App\Livewire\BlogDetail;
 use App\Livewire\Admin\Dashboard;
-use App\Livewire\Admin\CompanyProfile;
+use App\Livewire\Admin\UserController;
+use App\Livewire\Admin\GalleryController;
+use App\Livewire\Admin\BlogController as AdminBlogController;
 use App\Http\Controllers\FooterController;
 
 Route::view('/', 'home')->name('home');
@@ -26,17 +29,11 @@ Route::middleware([
 // Admin routes dengan permission middleware
 Route::middleware(['auth:sanctum', 'verified'])->prefix('admin')->name('admin.')->group(function () {
     
-    // Dashboard - accessible by all authenticated users with dashboard permission
-    // Route ini sudah tidak diperlukan karena dashboard utama sudah menggunakan Livewire component
-    
     // User Management - Only Company Admin and Superadmin
     Route::middleware('permission:manage users')->group(function () {
-        Route::get('/users', function() {
-            return view('livewire.admin.users');
-        })->name('users');
+        Route::get('/users', UserController::class)->name('users');
     });
 
-    // Company Profile Management - Only Company Admin and Superadmin
     Route::middleware('permission:manage company profile')->group(function () {
         Route::get('/company-profile', CompanyProfile::class)->name('company-profile');
     });
@@ -50,9 +47,7 @@ Route::middleware(['auth:sanctum', 'verified'])->prefix('admin')->name('admin.')
 
     // Gallery Management
     Route::middleware('permission:manage gallery')->group(function () {
-        Route::get('/gallery', function() {
-            return view('livewire.admin.gallery');
-        })->name('gallery');
+        Route::get('/gallery', GalleryController::class)->name('gallery');
     });
 
     // Pricing Catalog
@@ -64,14 +59,10 @@ Route::middleware(['auth:sanctum', 'verified'])->prefix('admin')->name('admin.')
 
     // Blog Management
     Route::middleware('permission:view blog')->group(function () {
-        Route::get('/blog', function() {
-            return view('livewire.admin.blog');
-        })->name('blog');
+        Route::get('/blog', AdminBlogController::class)->name('blog');
         
         Route::middleware('permission:manage blog')->group(function () {
-            Route::get('/blog/create', function() {
-                return view('livewire.admin.blog-create');
-            })->name('blog.create');
+            Route::get('/blog/create', [AdminBlogController::class, 'create'])->name('blog.create');
         });
     });
 

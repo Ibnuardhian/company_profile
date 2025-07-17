@@ -9,6 +9,7 @@ use App\Models\Contact;
 
 class CompanyProfile extends Component
 {
+    public $slideOverOpen = false;
     use WithFileUploads;
     public $companyProfile;
     public $showEditForm = false;

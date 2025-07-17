@@ -88,14 +88,22 @@ if (!auth()->user()->can('manage users')) {
 
 ### 3. Dalam Route
 ```php
-// Single permission
-Route::get('/admin/users', [AdminController::class, 'users'])
+// User Management
+Route::get('/admin/users', [UserController::class, 'index'])
     ->middleware('permission:manage users');
 
-// Multiple routes dengan permission yang sama
+// Gallery Management
 Route::middleware('permission:manage gallery')->group(function () {
-    Route::get('/gallery', [AdminController::class, 'gallery']);
-    Route::post('/gallery', [AdminController::class, 'store']);
+    Route::get('/gallery', [GalleryController::class, 'index']);
+});
+
+// Blog Management
+Route::middleware('permission:view blog')->group(function () {
+    Route::get('/blog', [BlogController::class, 'index']);
+    
+    Route::middleware('permission:manage blog')->group(function () {
+        Route::get('/blog/create', [BlogController::class, 'create']);
+    });
 });
 ```
 
@@ -143,10 +151,13 @@ php artisan db:seed --class=RolePermissionSeeder
 
 ```
 app/
+├── Livewire/
+│   └── Admin/
+│       ├── UserController.php
+│       ├── GalleryController.php
+│       ├── BlogController.php
+│       └── CompanyProfileController.php
 ├── Http/
-│   ├── Controllers/
-│   │   └── Admin/
-│   │       └── AdminController.php
 │   └── Middleware/
 │       └── CheckPermission.php
 ├── Models/
