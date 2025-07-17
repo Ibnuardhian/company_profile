@@ -12,7 +12,6 @@ class CompanyProfile extends Component
     public $slideOverOpen = false;
     use WithFileUploads;
     public $companyProfile;
-    public $showEditForm = false;
     public $showContactForm = false;
 
     protected $rules = [
@@ -80,7 +79,9 @@ class CompanyProfile extends Component
 
     public function mount()
     {
-        $this->companyProfile = CompanyProfileModel::with('contacts')->first();
+        $this->companyProfile = CompanyProfileModel::with(['contacts' => function($query) {
+            $query->orderBy('type');
+        }])->first();
         
         if ($this->companyProfile) {
             $this->name = $this->companyProfile->name;
@@ -92,11 +93,6 @@ class CompanyProfile extends Component
             $this->pool_address = $this->companyProfile->pool_address;
             $this->google_maps_embed_url = $this->companyProfile->google_maps_embed_url;
         }
-    }
-
-    public function toggleEditForm()
-    {
-        $this->showEditForm = !$this->showEditForm;
     }
 
     public function save()
@@ -189,26 +185,10 @@ class CompanyProfile extends Component
     {
         try {
             $this->save();
-            $this->showEditForm = false;
             session()->flash('message', 'Company profile updated successfully!');
         } catch (\Illuminate\Validation\ValidationException $e) {
             // Re-throw validation exception to show errors
             throw $e;
-        }
-    }
-
-    public function cancel()
-    {
-        $this->showEditForm = false;
-        if ($this->companyProfile) {
-            $this->name = $this->companyProfile->name;
-            $this->logo_path = $this->companyProfile->logo_path;
-            $this->description = $this->companyProfile->description;
-            $this->vision = $this->companyProfile->vision;
-            $this->mission = $this->companyProfile->mission;
-            $this->address = $this->companyProfile->address;
-            $this->pool_address = $this->companyProfile->pool_address;
-            $this->google_maps_embed_url = $this->companyProfile->google_maps_embed_url;
         }
     }
 
@@ -302,6 +282,12 @@ class CompanyProfile extends Component
         $contact = Contact::find($contactId);
         if ($contact && $contact->company_profile_id == $this->companyProfile->id) {
             $contact->update(['is_active' => !$contact->is_active]);
+            
+            // Refresh the company profile with contacts to get updated data
+            $this->companyProfile = $this->companyProfile->fresh(['contacts' => function($query) {
+                $query->orderBy('type');
+            }]);
+            
             session()->flash('message', 'Contact status updated!');
         }
     }
@@ -330,7 +316,9 @@ class CompanyProfile extends Component
             $this->save();
             
             // Refresh the company profile object to get the updated data
-            $this->companyProfile = CompanyProfileModel::with('contacts')->first();
+            $this->companyProfile = CompanyProfileModel::with(['contacts' => function($query) {
+                $query->orderBy('type');
+            }])->first();
             
             // Reset the upload property
             $this->logo_upload = null;
@@ -339,11 +327,49 @@ class CompanyProfile extends Component
         }
     }
 
+    // Auto-save methods for individual fields
+    public function updatedName()
+    {
+        $this->save();
+    }
+
+    public function updatedDescription()
+    {
+        $this->save();
+    }
+
+    public function updatedVision()
+    {
+        $this->save();
+    }
+
+    public function updatedMission()
+    {
+        $this->save();
+    }
+
+    public function updatedAddress()
+    {
+        $this->save();
+    }
+
+    public function updatedPoolAddress()
+    {
+        $this->save();
+    }
+
+    public function updatedGoogleMapsEmbedUrl()
+    {
+        $this->save();
+    }
+
     public function render()
     {
         // Refresh company profile with contacts
         if ($this->companyProfile) {
-            $this->companyProfile->load('contacts');
+            $this->companyProfile->load(['contacts' => function($query) {
+                $query->orderBy('type');
+            }]);
         }
         
         return view('livewire.admin.company-profile')
