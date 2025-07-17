@@ -14,6 +14,52 @@ class CompanyProfile extends Component
     public $companyProfile;
     public $showEditForm = false;
     public $showContactForm = false;
+
+    protected $rules = [
+        'name' => 'nullable|string|max:255',
+        'logo_path' => 'nullable|string',
+        'logo_upload' => 'nullable|image|max:2048',
+        'description' => 'nullable|string',
+        'vision' => 'nullable|string',
+        'mission' => 'nullable|string',
+        'address' => 'nullable|string',
+        'pool_address' => 'nullable|string',
+        'google_maps_embed_url' => 'nullable|url',
+        'contactType' => 'required|string|in:phone,email,whatsapp,website,address,social',
+        'contactLabel' => 'required|string|max:255',
+        'contactValue' => 'required|string|max:500',
+        'contactIsPrimary' => 'boolean',
+    ];
+
+    public $messages = [
+        'name.string' => 'Nama perusahaan harus berupa teks.',
+        'name.max' => 'Nama perusahaan tidak boleh lebih dari 255 karakter.',
+        'logo_upload.image' => 'File yang diupload harus berupa gambar.',
+        'logo_upload.max' => 'Ukuran gambar tidak boleh lebih dari 2MB.',
+        'description.string' => 'Deskripsi harus berupa teks.',
+        'vision.string' => 'Visi harus berupa teks.',
+        'mission.string' => 'Misi harus berupa teks.',
+        'address.string' => 'Alamat harus berupa teks.',
+        'pool_address.string' => 'Alamat pool harus berupa teks.',
+        'google_maps_embed_url.url' => 'Google Maps URL harus berupa URL yang valid.',
+        'contactType.required' => 'Tipe kontak wajib dipilih.',
+        'contactType.in' => 'Tipe kontak yang dipilih tidak valid.',
+        'contactLabel.required' => 'Label kontak wajib diisi.',
+        'contactLabel.string' => 'Label kontak harus berupa teks.',
+        'contactLabel.max' => 'Label kontak tidak boleh lebih dari 255 karakter.',
+        'contactValue.required' => 'Nilai kontak wajib diisi.',
+        'contactValue.string' => 'Nilai kontak harus berupa teks.',
+        'contactValue.max' => 'Nilai kontak tidak boleh lebih dari 500 karakter.',
+        'contactIsPrimary.boolean' => 'Status primary harus berupa true atau false.',
+    ];
+
+    /**
+     * Get custom validation messages
+     */
+    protected function messages()
+    {
+        return $this->messages;
+    }
     
     public $name;
     public $logo_path;
@@ -62,18 +108,20 @@ class CompanyProfile extends Component
             'has_company_profile' => !is_null($this->companyProfile)
         ]);
 
-        // For auto-save, we'll use more lenient validation
-        $this->validate([
-            'name' => 'nullable|string|max:255',
-            'logo_path' => 'nullable|string',
-            'logo_upload' => 'nullable|image|max:2048',
-            'description' => 'nullable|string',
-            'vision' => 'nullable|string',
-            'mission' => 'nullable|string',
-            'address' => 'nullable|string',
-            'pool_address' => 'nullable|string',
-            'google_maps_embed_url' => 'nullable|url',
-        ]);
+        // For auto-save, we'll use more lenient validation with only company profile fields
+        $companyProfileRules = [
+            'name' => $this->rules['name'],
+            'logo_path' => $this->rules['logo_path'],
+            'logo_upload' => $this->rules['logo_upload'],
+            'description' => $this->rules['description'],
+            'vision' => $this->rules['vision'],
+            'mission' => $this->rules['mission'],
+            'address' => $this->rules['address'],
+            'pool_address' => $this->rules['pool_address'],
+            'google_maps_embed_url' => $this->rules['google_maps_embed_url'],
+        ];
+
+        $this->validate($companyProfileRules, $this->messages);
 
         if (!$this->companyProfile) {
             // Create new company profile if it doesn't exist
@@ -139,9 +187,14 @@ class CompanyProfile extends Component
 
     public function saveWithMessage()
     {
-        $this->save();
-        $this->showEditForm = false;
-        session()->flash('message', 'Company profile updated successfully!');
+        try {
+            $this->save();
+            $this->showEditForm = false;
+            session()->flash('message', 'Company profile updated successfully!');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            // Re-throw validation exception to show errors
+            throw $e;
+        }
     }
 
     public function cancel()
@@ -177,12 +230,14 @@ class CompanyProfile extends Component
 
     public function saveContact()
     {
-        $this->validate([
-            'contactType' => 'required|string|in:phone,email,whatsapp,website,address,social',
-            'contactLabel' => 'required|string|max:255',
-            'contactValue' => 'required|string|max:500',
-            'contactIsPrimary' => 'boolean',
-        ]);
+        $contactRules = [
+            'contactType' => $this->rules['contactType'],
+            'contactLabel' => $this->rules['contactLabel'],
+            'contactValue' => $this->rules['contactValue'],
+            'contactIsPrimary' => $this->rules['contactIsPrimary'],
+        ];
+
+        $this->validate($contactRules, $this->messages);
 
         // Ensure we have a company profile
         if (!$this->companyProfile) {
@@ -254,8 +309,8 @@ class CompanyProfile extends Component
     public function updatedLogoUpload()
     {
         $this->validate([
-            'logo_upload' => 'image|max:2048', // Max 2MB
-        ]);
+            'logo_upload' => $this->rules['logo_upload'], // Max 2MB
+        ], $this->messages);
 
         // Store the uploaded file
         if ($this->logo_upload) {

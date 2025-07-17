@@ -61,8 +61,7 @@
                             <div>
                                 <label class="block text-sm font-medium text-gray-600 mb-1">Company Name</label>
                                 <input type="text" 
-                                       wire:model.live="name" 
-                                       wire:blur="save"
+                                       wire:model="name" 
                                        value="{{ $name ?? '' }}"
                                        class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                        placeholder="Enter company name">
@@ -72,8 +71,7 @@
                             <!-- Description -->
                             <div>
                                 <label class="block text-sm font-medium text-gray-600 mb-1">Deskripsi</label>
-                                <textarea wire:model.live="description" 
-                                          wire:blur="save"
+                                <textarea wire:model="description" 
                                           placeholder="Type your message here."
                                           class="flex w-full h-auto min-h-[80px] px-3 py-2 text-sm bg-white border rounded-md border-neutral-300 placeholder:text-neutral-400 focus:border-neutral-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-400 disabled:cursor-not-allowed disabled:opacity-50 resize-none">{{ $description ?? '' }}</textarea>
                                 @error('description') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
@@ -86,8 +84,7 @@
                         <!-- Visi -->
                         <div>
                             <label class="block text-sm font-medium text-gray-600 mb-1">Visi</label>
-                            <textarea wire:model.live="vision" 
-                                      wire:blur="save"
+                            <textarea wire:model="vision" 
                                       rows="3"
                                       class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
                                       placeholder="Enter company vision">{{ $vision ?? '' }}</textarea>
@@ -97,8 +94,7 @@
                         <!-- Misi -->
                         <div>
                             <label class="block text-sm font-medium text-gray-600 mb-1">Misi</label>
-                            <textarea wire:model.live="mission" 
-                                      wire:blur="save"
+                            <textarea wire:model="mission" 
                                       rows="3"
                                       class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
                                       placeholder="Enter company mission">{{ $mission ?? '' }}</textarea>
@@ -113,8 +109,7 @@
                     
                     <div>
                         <label class="block text-sm font-medium text-gray-600 mb-1">Address</label>
-                        <textarea wire:model.live="address" 
-                                  wire:blur="save"
+                        <textarea wire:model="address" 
                                   rows="3"
                                   class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
                                   placeholder="Enter company address">{{ $address ?? '' }}</textarea>
@@ -123,8 +118,7 @@
                     
                     <div>
                         <label class="block text-sm font-medium text-gray-600 mb-1">Pool Address</label>
-                        <textarea wire:model.live="pool_address" 
-                                  wire:blur="save"
+                        <textarea wire:model="pool_address" 
                                   rows="3"
                                   class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
                                   placeholder="Enter pool address">{{ $pool_address ?? '' }}</textarea>
@@ -133,8 +127,7 @@
                     <div>
                         <label class="block text-sm font-medium text-gray-600 mb-1">Google Maps URL</label>
                         <input type="url" 
-                               wire:model.live="google_maps_embed_url" 
-                               wire:blur="save"
+                               wire:model="google_maps_embed_url" 
                                value="{{ $google_maps_embed_url ?? '' }}"
                                class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                placeholder="Enter Google Maps embed URL">
@@ -145,8 +138,7 @@
 
             <!-- Submit Button -->
             <div class="mt-6 flex justify-end">
-                <button wire:click="save()" 
-                        onclick="console.log('=== SUBMIT BUTTON CLICKED ==='); console.log('Timestamp:', new Date().toLocaleString()); console.log('Current form data:', { name: @js($name), description: @js($description), vision: @js($vision), mission: @js($mission), address: @js($address), pool_address: @js($pool_address) }); console.log('=== END SUBMIT LOG ===');"
+                <button wire:click="saveWithMessage()" 
                         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg transition duration-200 ease-in-out transform hover:scale-105">
                     <i class="fas fa-save mr-2"></i>
                     Save Changes
