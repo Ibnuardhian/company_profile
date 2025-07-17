@@ -79,6 +79,14 @@ class CompanyProfile extends Component
 
     public function mount()
     {
+        // Check if user has permission to view/edit company profile or edit address or edit contact
+        if (!auth()->user()->can('view company profile') && 
+            !auth()->user()->can('manage company profile') && 
+            !auth()->user()->can('edit company address') &&
+            !auth()->user()->can('edit contact info')) {
+            abort(403, 'Unauthorized. You do not have permission to access this page.');
+        }
+
         $this->companyProfile = CompanyProfileModel::with(['contacts' => function($query) {
             $query->orderBy('type');
         }])->first();
@@ -97,71 +105,89 @@ class CompanyProfile extends Component
 
     public function save()
     {
-        // Add logging
-        \Log::info('Save method called', [
-            'name' => $this->name,
-            'description' => $this->description,
-            'has_company_profile' => !is_null($this->companyProfile)
-        ]);
+        // Check permissions first
+        $canManageProfile = auth()->user()->can('manage company profile');
+        $canEditAddress = auth()->user()->can('edit company address');
+        
+        if (!$canManageProfile && !$canEditAddress) {
+            session()->flash('error', 'You do not have permission to save changes.');
+            return;
+        }
 
-        // For auto-save, we'll use more lenient validation with only company profile fields
-        $companyProfileRules = [
-            'name' => $this->rules['name'],
-            'logo_path' => $this->rules['logo_path'],
-            'logo_upload' => $this->rules['logo_upload'],
-            'description' => $this->rules['description'],
-            'vision' => $this->rules['vision'],
-            'mission' => $this->rules['mission'],
-            'address' => $this->rules['address'],
-            'pool_address' => $this->rules['pool_address'],
-            'google_maps_embed_url' => $this->rules['google_maps_embed_url'],
-        ];
-
-        $this->validate($companyProfileRules, $this->messages);
+        // Validate only company profile fields (excluding contact fields)
+        $this->validate([
+            'name' => 'nullable|string|max:255',
+            'logo_path' => 'nullable|string',
+            'logo_upload' => 'nullable|image|max:2048',
+            'description' => 'nullable|string',
+            'vision' => 'nullable|string',
+            'mission' => 'nullable|string',
+            'address' => 'nullable|string',
+            'pool_address' => 'nullable|string',
+            'google_maps_embed_url' => 'nullable|url',
+        ], $this->messages);
 
         if (!$this->companyProfile) {
             // Create new company profile if it doesn't exist
-            $data = [
-                'name' => $this->name,
-                'logo_path' => $this->logo_path,
-                'description' => $this->description,
-                'vision' => $this->vision,
-                'mission' => $this->mission,
-                'address' => $this->address,
-                'pool_address' => $this->pool_address,
-                'google_maps_embed_url' => $this->google_maps_embed_url,
-            ];
+            $data = [];
+            
+            // Only include fields based on permissions
+            if ($canManageProfile) {
+                $data = [
+                    'name' => $this->name,
+                    'logo_path' => $this->logo_path,
+                    'description' => $this->description,
+                    'vision' => $this->vision,
+                    'mission' => $this->mission,
+                    'address' => $this->address,
+                    'pool_address' => $this->pool_address,
+                    'google_maps_embed_url' => $this->google_maps_embed_url,
+                ];
+            } elseif ($canEditAddress) {
+                $data = [
+                    'name' => 'Company Name', // Default value
+                    'address' => $this->address,
+                    'pool_address' => $this->pool_address,
+                ];
+            }
             
             \Log::info('Creating new company profile', $data);
             $this->companyProfile = CompanyProfileModel::create($data);
             \Log::info('Company profile created with ID: ' . $this->companyProfile->id);
         } else {
-            // Only update fields that have changed
+            // Only update fields that have changed and user has permission for
             $dataToUpdate = [];
             
-            if ($this->name !== $this->companyProfile->name) {
-                $dataToUpdate['name'] = $this->name;
+            if ($canManageProfile) {
+                // User can edit all fields
+                if ($this->name !== $this->companyProfile->name) {
+                    $dataToUpdate['name'] = $this->name;
+                }
+                if ($this->logo_path !== $this->companyProfile->logo_path) {
+                    $dataToUpdate['logo_path'] = $this->logo_path;
+                }
+                if ($this->description !== $this->companyProfile->description) {
+                    $dataToUpdate['description'] = $this->description;
+                }
+                if ($this->vision !== $this->companyProfile->vision) {
+                    $dataToUpdate['vision'] = $this->vision;
+                }
+                if ($this->mission !== $this->companyProfile->mission) {
+                    $dataToUpdate['mission'] = $this->mission;
+                }
+                if ($this->google_maps_embed_url !== $this->companyProfile->google_maps_embed_url) {
+                    $dataToUpdate['google_maps_embed_url'] = $this->google_maps_embed_url;
+                }
             }
-            if ($this->logo_path !== $this->companyProfile->logo_path) {
-                $dataToUpdate['logo_path'] = $this->logo_path;
-            }
-            if ($this->description !== $this->companyProfile->description) {
-                $dataToUpdate['description'] = $this->description;
-            }
-            if ($this->vision !== $this->companyProfile->vision) {
-                $dataToUpdate['vision'] = $this->vision;
-            }
-            if ($this->mission !== $this->companyProfile->mission) {
-                $dataToUpdate['mission'] = $this->mission;
-            }
-            if ($this->address !== $this->companyProfile->address) {
-                $dataToUpdate['address'] = $this->address;
-            }
-            if ($this->pool_address !== $this->companyProfile->pool_address) {
-                $dataToUpdate['pool_address'] = $this->pool_address;
-            }
-            if ($this->google_maps_embed_url !== $this->companyProfile->google_maps_embed_url) {
-                $dataToUpdate['google_maps_embed_url'] = $this->google_maps_embed_url;
+            
+            // Both permissions can edit address fields
+            if ($canManageProfile || $canEditAddress) {
+                if ($this->address !== $this->companyProfile->address) {
+                    $dataToUpdate['address'] = $this->address;
+                }
+                if ($this->pool_address !== $this->companyProfile->pool_address) {
+                    $dataToUpdate['pool_address'] = $this->pool_address;
+                }
             }
 
             \Log::info('Fields to update', $dataToUpdate);
@@ -177,8 +203,7 @@ class CompanyProfile extends Component
             }
         }
 
-        // Don't close edit form or show flash message for auto-save
-        // Only show message when explicitly saving (can be handled separately)
+        // No auto-save message for manual save
     }
 
     public function saveWithMessage()
@@ -210,6 +235,12 @@ class CompanyProfile extends Component
 
     public function saveContact()
     {
+        // Check if user has permission to manage company profile or edit contact info
+        if (!auth()->user()->can('manage company profile') && !auth()->user()->can('edit contact info')) {
+            session()->flash('error', 'You do not have permission to save contacts.');
+            return;
+        }
+
         $contactRules = [
             'contactType' => $this->rules['contactType'],
             'contactLabel' => $this->rules['contactLabel'],
@@ -257,6 +288,12 @@ class CompanyProfile extends Component
 
     public function editContact($contactId)
     {
+        // Check if user has permission to manage company profile or edit contact info
+        if (!auth()->user()->can('manage company profile') && !auth()->user()->can('edit contact info')) {
+            session()->flash('error', 'You do not have permission to edit contacts.');
+            return;
+        }
+
         $contact = Contact::find($contactId);
         if ($contact && $contact->company_profile_id == $this->companyProfile->id) {
             $this->editingContactId = $contact->id;
@@ -270,6 +307,12 @@ class CompanyProfile extends Component
 
     public function deleteContact($contactId)
     {
+        // Check if user has permission to manage company profile or edit contact info
+        if (!auth()->user()->can('manage company profile') && !auth()->user()->can('edit contact info')) {
+            session()->flash('error', 'You do not have permission to delete contacts.');
+            return;
+        }
+
         $contact = Contact::find($contactId);
         if ($contact && $contact->company_profile_id == $this->companyProfile->id) {
             $contact->delete();
@@ -279,6 +322,12 @@ class CompanyProfile extends Component
 
     public function toggleContactStatus($contactId)
     {
+        // Check if user has permission to manage company profile or edit contact info
+        if (!auth()->user()->can('manage company profile') && !auth()->user()->can('edit contact info')) {
+            session()->flash('error', 'You do not have permission to toggle contact status.');
+            return;
+        }
+
         $contact = Contact::find($contactId);
         if ($contact && $contact->company_profile_id == $this->companyProfile->id) {
             $contact->update(['is_active' => !$contact->is_active]);
@@ -325,42 +374,6 @@ class CompanyProfile extends Component
             
             session()->flash('message', 'Logo uploaded successfully!');
         }
-    }
-
-    // Auto-save methods for individual fields
-    public function updatedName()
-    {
-        $this->save();
-    }
-
-    public function updatedDescription()
-    {
-        $this->save();
-    }
-
-    public function updatedVision()
-    {
-        $this->save();
-    }
-
-    public function updatedMission()
-    {
-        $this->save();
-    }
-
-    public function updatedAddress()
-    {
-        $this->save();
-    }
-
-    public function updatedPoolAddress()
-    {
-        $this->save();
-    }
-
-    public function updatedGoogleMapsEmbedUrl()
-    {
-        $this->save();
     }
 
     public function render()

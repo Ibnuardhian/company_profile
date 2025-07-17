@@ -9,7 +9,7 @@ use App\Livewire\Admin\Dashboard;
 use App\Livewire\Admin\UserController;
 use App\Livewire\Admin\GalleryController;
 use App\Livewire\Admin\BlogController as AdminBlogController;
-use App\Http\Controllers\FooterController;
+use App\Livewire\Admin\FooterController;
 
 Route::view('/', 'home')->name('home');
 
@@ -34,7 +34,7 @@ Route::middleware(['auth:sanctum', 'verified'])->prefix('admin')->name('admin.')
         Route::get('/users', UserController::class)->name('users');
     });
 
-    Route::middleware('permission:manage company profile')->group(function () {
+    Route::middleware('permission:view company profile|edit company address|edit contact info')->group(function () {
         Route::get('/company-profile', CompanyProfile::class)->name('company-profile');
     });
 

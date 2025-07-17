@@ -40,7 +40,7 @@
                                     @endcan
                                     @can('manage users')
                                         <li>
-                                            <a href="#" onclick="closeSlideover()"
+                                            <a href="{{ route('admin.users') }}" onclick="closeSlideover()"
                                                 class="flex items-center px-4 py-3 text-sm rounded-lg text-gray-300 hover:bg-gray-700 hover:text-white transition-colors duration-200">
                                                 <i class="fas fa-users mr-3 w-5"></i>
                                                 Users

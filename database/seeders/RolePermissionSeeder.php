@@ -20,33 +20,33 @@ class RolePermissionSeeder extends Seeder
         $permissions = [
             // User Management
             'manage users',
-            
+
             // Company Profile Management
             'view company profile',
             'manage company profile',
-            
+
             // Banner Management
             'edit banner',
-            
+
             // Gallery Management
             'manage gallery',
-            
+
             // Pricing/Catalog
             'manage pricing catalog',
-            
+
             // Blog Management
             'manage blog',
             'view blog',
-            
+
             // Address Management
             'edit company address',
-            
+
             // Contact Management
             'edit contact info',
-            
+
             // FAQ Management
             'manage faq',
-            
+
             // Dashboard Access
             'view dashboard',
         ];
@@ -56,11 +56,11 @@ class RolePermissionSeeder extends Seeder
         }
 
         // Create roles and assign permissions
-        
+
         // 1. Superadmin Role (akan menggunakan Gate::before() intercept)
         $superadminRole = Role::create(['name' => 'superadmin']);
         // Superadmin tidak perlu permission eksplisit karena akan menggunakan Gate::before()
-        
+
         // 2. Company Admin Role
         $companyAdminRole = Role::create(['name' => 'company admin']);
         $companyAdminRole->givePermissionTo([
@@ -71,9 +71,7 @@ class RolePermissionSeeder extends Seeder
             'manage gallery',
             'manage pricing catalog',
             'manage blog',
-            'view blog',
-            'edit company address',
-            'edit contact info',
+            'view blog', 
             'manage faq',
             'view dashboard',
         ]);
@@ -82,8 +80,9 @@ class RolePermissionSeeder extends Seeder
         $companyUserRole = Role::create(['name' => 'company user']);
         $companyUserRole->givePermissionTo([
             'view company profile',
-            'manage company profile',
             'edit banner',
+            'edit company address',
+            'edit contact info',
             'manage gallery',
             'manage pricing catalog',
             'manage blog',

@@ -46,8 +46,9 @@
                                 <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                                     for="logo_input">Upload file</label>
                                 <input wire:model="logo_upload"
-                                    class="block w-full text-sm text-gray-900 border border-gray-300 cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                                    id="logo_input" type="file" accept="image/*">
+                                    class="block w-full text-sm text-gray-900 border border-gray-300 cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 {{ !canAccess('manage company profile') ? 'opacity-50 cursor-not-allowed' : '' }}"
+                                    id="logo_input" type="file" accept="image/*"
+                                    {{ !canAccess('manage company profile') ? 'disabled' : '' }}>
                                 @if($errors->has('logo_upload')) <span
                                 class="text-red-500 text-xs">{{ $errors->first('logo_upload') }}</span> @endif
 
@@ -63,8 +64,9 @@
                             <div>
                                 <label class="block text-sm font-medium text-gray-600 mb-1">Company Name</label>
                                 <input type="text" wire:model="name"
-                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                    placeholder="Enter company name">
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent {{ !canAccess('manage company profile') ? 'bg-gray-100 cursor-not-allowed' : '' }}"
+                                    placeholder="Enter company name"
+                                    {{ !canAccess('manage company profile') ? 'readonly' : '' }}>
                                 @if($errors->has('name')) <span
                                 class="text-red-500 text-xs">{{ $errors->first('name') }}</span> @endif
                             </div>
@@ -73,7 +75,8 @@
                             <div>
                                 <label class="block text-sm font-medium text-gray-600 mb-1">Deskripsi</label>
                                 <textarea wire:model="description" placeholder="Type your message here."
-                                    class="flex w-full h-auto min-h-[80px] px-3 py-2 text-sm bg-white border rounded-md border-neutral-300 placeholder:text-neutral-400 focus:border-neutral-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-400 disabled:cursor-not-allowed disabled:opacity-50 resize-none"></textarea>
+                                    class="flex w-full h-auto min-h-[80px] px-3 py-2 text-sm bg-white border rounded-md border-neutral-300 placeholder:text-neutral-400 focus:border-neutral-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-400 disabled:cursor-not-allowed disabled:opacity-50 resize-none {{ !canAccess('manage company profile') ? 'bg-gray-100 cursor-not-allowed' : '' }}"
+                                    {{ !canAccess('manage company profile') ? 'disabled' : '' }}></textarea>
                                 @if($errors->has('description')) <span
                                 class="text-red-500 text-xs">{{ $errors->first('description') }}</span> @endif
                             </div>
@@ -86,8 +89,9 @@
                         <div>
                             <label class="block text-sm font-medium text-gray-600 mb-1">Visi</label>
                             <textarea wire:model="vision" rows="3"
-                                class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
-                                placeholder="Enter company vision"></textarea>
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none {{ !canAccess('manage company profile') ? 'bg-gray-100 cursor-not-allowed' : '' }}"
+                                placeholder="Enter company vision"
+                                {{ !canAccess('manage company profile') ? 'readonly' : '' }}></textarea>
                             @if($errors->has('vision')) <span
                             class="text-red-500 text-xs">{{ $errors->first('vision') }}</span> @endif
                         </div>
@@ -96,8 +100,9 @@
                         <div>
                             <label class="block text-sm font-medium text-gray-600 mb-1">Misi</label>
                             <textarea wire:model="mission" rows="3"
-                                class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
-                                placeholder="Enter company mission"></textarea>
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none {{ !canAccess('manage company profile') ? 'bg-gray-100 cursor-not-allowed' : '' }}"
+                                placeholder="Enter company mission"
+                                {{ !canAccess('manage company profile') ? 'readonly' : '' }}></textarea>
                             @if($errors->has('mission')) <span
                             class="text-red-500 text-xs">{{ $errors->first('mission') }}</span> @endif
                         </div>
@@ -111,8 +116,9 @@
                     <div>
                         <label class="block text-sm font-medium text-gray-600 mb-1">Address</label>
                         <textarea wire:model="address" rows="3"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
-                            placeholder="Enter company address"></textarea>
+                            class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none {{ (!canAccess('manage company profile') && !canAccess('edit company address')) ? 'bg-gray-100 cursor-not-allowed' : '' }}"
+                            placeholder="Enter company address"
+                            {{ (!canAccess('manage company profile') && !canAccess('edit company address')) ? 'readonly' : '' }}></textarea>
                         @if($errors->has('address')) <span
                         class="text-red-500 text-xs">{{ $errors->first('address') }}</span> @endif
                     </div>
@@ -120,8 +126,9 @@
                     <div>
                         <label class="block text-sm font-medium text-gray-600 mb-1">Pool Address</label>
                         <textarea wire:model="pool_address" rows="3"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
-                            placeholder="Enter pool address"></textarea>
+                            class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none {{ (!canAccess('manage company profile') && !canAccess('edit company address')) ? 'bg-gray-100 cursor-not-allowed' : '' }}"
+                            placeholder="Enter pool address"
+                            {{ (!canAccess('manage company profile') && !canAccess('edit company address')) ? 'readonly' : '' }}></textarea>
                         @if($errors->has('pool_address')) <span
                         class="text-red-500 text-xs">{{ $errors->first('pool_address') }}</span> @endif
                     </div>
@@ -135,8 +142,9 @@
                             @endif
                             <label class="block text-sm font-medium text-gray-600 mt-3 mb-1">Google Maps URL</label>
                             <input type="url" wire:model="google_maps_embed_url"
-                                class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                placeholder="Enter Google Maps embed URL">
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent {{ (!canAccess('manage company profile') && !canAccess('edit company address')) ? 'bg-gray-100 cursor-not-allowed' : '' }}"
+                                placeholder="Enter Google Maps embed URL"
+                                {{ (!canAccess('manage company profile') && !canAccess('edit company address')) ? 'readonly' : '' }}>
                             @if($errors->has('google_maps_embed_url')) <span
                             class="text-red-500 text-xs">{{ $errors->first('google_maps_embed_url') }}</span> @endif
                         </div>
@@ -146,11 +154,19 @@
 
             <!-- Submit Button -->
             <div class="mt-6 flex justify-end">
-                <button wire:click="saveWithMessage()"
-                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg transition duration-200 ease-in-out transform hover:scale-105">
-                    <i class="fas fa-save mr-2"></i>
-                    Save Changes
-                </button>
+                @if(canAccess('manage company profile') || canAccess('edit company address'))
+                    <button wire:click="saveWithMessage()"
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg transition duration-200 ease-in-out transform hover:scale-105">
+                        <i class="fas fa-save mr-2"></i>
+                        Save Changes
+                    </button>
+                @else
+                    <button disabled
+                        class="bg-gray-400 cursor-not-allowed text-white font-bold py-2 px-6 rounded-lg opacity-50">
+                        <i class="fas fa-save mr-2"></i>
+                        Save Changes
+                    </button>
+                @endif
             </div>
 
             <!-- Contact Informations-->
@@ -158,10 +174,17 @@
                 <div class="mt-8">
                     <div class="flex justify-between items-center mb-4">
                         <h2 class="text-xl font-semibold text-gray-700 border-b pb-2">Contact Informations</h2>
-                        <button wire:click="toggleContactForm"
-                            class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded text-sm">
-                            Add Contact
-                        </button>
+                        @if(canAccess('manage company profile') || canAccess('edit contact info'))
+                            <button wire:click="toggleContactForm"
+                                class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded text-sm">
+                                Add Contact
+                            </button>
+                        @else
+                            <button disabled
+                                class="bg-gray-400 cursor-not-allowed text-white font-bold py-2 px-4 rounded text-sm opacity-50">
+                                Add Contact
+                            </button>
+                        @endif
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -177,20 +200,37 @@
                                         @endif
                                     </div>
                                     <div class="flex items-center space-x-1">
-                                        <button wire:click="editContact({{ $contact->id }})"
-                                            class="text-blue-600 hover:text-blue-800 text-xs p-1">
-                                            <i class="fa-solid fa-pen-to-square"></i>
-                                        </button>
-                                        <button wire:click="deleteContact({{ $contact->id }})"
-                                            class="text-red-600 hover:text-red-800 text-xs p-1">
-                                            <i class="fa-solid fa-trash"></i>
-                                        </button>
-                                        <div class="flex items-center">
-                                            <button type="button"
-                                                wire:click="toggleContactStatus({{ $contact->id }})"
-                                                class="relative inline-flex h-4 w-7 focus:outline-none rounded-full transition-colors duration-200 {{ $contact->is_active ? 'bg-green-500' : 'bg-gray-300' }}">
-                                                <span class="w-4 h-4 duration-200 ease-in-out bg-white rounded-full shadow-sm transform transition-transform {{ $contact->is_active ? 'translate-x-3' : 'translate-x-0' }}"></span>
+                                        @if(canAccess('manage company profile') || canAccess('edit contact info'))
+                                            <button wire:click="editContact({{ $contact->id }})"
+                                                class="text-blue-600 hover:text-blue-800 text-xs p-1">
+                                                <i class="fa-solid fa-pen-to-square"></i>
                                             </button>
+                                            <button wire:click="deleteContact({{ $contact->id }})"
+                                                class="text-red-600 hover:text-red-800 text-xs p-1">
+                                                <i class="fa-solid fa-trash"></i>
+                                            </button>
+                                        @else
+                                            <button disabled
+                                                class="text-gray-400 cursor-not-allowed text-xs p-1">
+                                                <i class="fa-solid fa-pen-to-square"></i>
+                                            </button>
+                                            <button disabled
+                                                class="text-gray-400 cursor-not-allowed text-xs p-1">
+                                                <i class="fa-solid fa-trash"></i>
+                                            </button>
+                                        @endif
+                                        <div class="flex items-center">
+                                            @if(canAccess('manage company profile') || canAccess('edit contact info'))
+                                                <button type="button"
+                                                    wire:click="toggleContactStatus({{ $contact->id }})"
+                                                    class="relative inline-flex h-4 w-7 focus:outline-none rounded-full transition-colors duration-200 {{ $contact->is_active ? 'bg-green-500' : 'bg-gray-300' }}">
+                                                    <span class="w-4 h-4 duration-200 ease-in-out bg-white rounded-full shadow-sm transform transition-transform {{ $contact->is_active ? 'translate-x-3' : 'translate-x-0' }}"></span>
+                                                </button>
+                                            @else
+                                                <div class="relative inline-flex h-4 w-7 rounded-full opacity-50 cursor-not-allowed {{ $contact->is_active ? 'bg-green-500' : 'bg-gray-300' }}">
+                                                    <span class="w-4 h-4 duration-200 ease-in-out bg-white rounded-full shadow-sm transform transition-transform {{ $contact->is_active ? 'translate-x-3' : 'translate-x-0' }}"></span>
+                                                </div>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -203,17 +243,24 @@
                 <div class="mt-8">
                     <div class="flex justify-between items-center mb-4">
                         <h2 class="text-xl font-semibold text-gray-700 border-b pb-2">Contact Informations</h2>
-                        <button wire:click="toggleContactForm"
-                            class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded text-sm">
-                            Add Contact
-                        </button>
+                        @if(canAccess('manage company profile') || canAccess('edit contact info'))
+                            <button wire:click="toggleContactForm"
+                                class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded text-sm">
+                                Add Contact
+                            </button>
+                        @else
+                            <button disabled
+                                class="bg-gray-400 cursor-not-allowed text-white font-bold py-2 px-4 rounded text-sm opacity-50">
+                                Add Contact
+                            </button>
+                        @endif
                     </div>
                     <p class="text-gray-500 italic">No Contact Informations added yet.</p>
                 </div>
             @endif
 
             <!-- Contact Form Modal -->
-            @if($showContactForm)
+            @if($showContactForm && (canAccess('manage company profile') || canAccess('edit contact info')))
                 <div class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
                     <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
                         <div class="mt-3">
