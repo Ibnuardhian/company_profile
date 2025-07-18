@@ -1,10 +1,15 @@
 <div>
     <div class="py-3 px-2 sm:py-6 sm:px-8 space-y-4 max-w-7xl mx-auto">
         <div class="flex justify-between gap-4 items-center pb-4">
-            <button wire:click="toggleShowDeleted"
-            class="px-4 py-2 text-sm font-semibold rounded {{ $showDeleted ? 'bg-blue-500 text-white' : 'bg-red-200 text-red-700' }}">
-            {{ $showDeleted ? 'Show Active Users' : 'Show Deleted Users' }}
-            </button>
+            <!-- Role filter dropdown -->
+            <div class="flex gap-2">
+                <select wire:model.live="filterRole" class="px-3 py-2 text-sm border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-100 focus:border-indigo-300">
+                    <option value="">Semua Peran</option>
+                    @foreach($roles as $role)
+                        <option value="{{ $role->name }}">{{ ucwords(str_replace('-', ' ', $role->name)) }}</option>
+                    @endforeach
+                </select>
+            </div>
             <div class="w-full sm:w-96 flex relative items-center">
             <input type="text" wire:model.live="search" autocomplete="off"
                 class="block w-full rounded-full text-sm focus:ring-4 focus:ring-indigo-100 border-gray-300 py-1.5 shadow-sm focus:border-indigo-300 peer"
@@ -39,23 +44,24 @@
                                 <td class="py-4 px-6">{{ $user->name }}</td>
                                 <td class="py-4 px-6">{{ $user->email }}</td>
                                 <td class="py-4 px-6">
-                                    {{ strtoupper($user->role) }}
+                                    @if($user->roles->isNotEmpty())
+                                        @foreach($user->roles as $role)
+                                            <span class="inline-block bg-blue-100 text-blue-800 text-xs font-medium px-2 py-1 rounded-full mr-1 mb-1">
+                                                {{ ucwords(str_replace('-', ' ', $role->name)) }}
+                                            </span>
+                                        @endforeach
+                                    @else
+                                        <span class="text-gray-400 text-sm">No Role</span>
+                                    @endif
                                 </td>
                                 <td class=" py-4 pl-3 pr-4 text-sm font-medium sm:pr-6">
-                                    @if ($user->trashed())
-                                        <button wire:click="recoverUser({{ $user->id }})"
-                                            class="text-green-600 hover:text-green-900">
-                                            Recover
-                                        </button>
-                                    @else
-                                        @livewire(
-                                            'usermanagement.user-detail',
-                                            [
-                                                'user' => $user,
-                                            ],
-                                            key(rand() . $user->id)
-                                        )
-                                    @endif
+                                    @livewire(
+                                        'user-management.user-detail',
+                                        [
+                                            'user' => $user->id,
+                                        ],
+                                        key('user-detail-' . $user->id)
+                                    )
                                 </td>
                             </tr>
                         @endforeach

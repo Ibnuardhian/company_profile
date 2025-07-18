@@ -1,5 +1,8 @@
 <!-- Top Navigation -->
 <header class="bg-white shadow-sm border-b border-gray-200">
+    <!-- Login As User Notice -->
+    @livewire('admin.switch-back-to-admin')
+
     <div class="flex items-center justify-between px-6 py-4">
         <div class="flex items-center">
             <button onclick="openSlideover()" type="button"

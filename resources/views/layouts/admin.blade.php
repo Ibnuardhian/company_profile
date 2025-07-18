@@ -43,6 +43,14 @@
 
             <!-- Page Content -->
             <main class="flex-1 p-6">
+                <!-- Flash Messages -->
+                @if(session('login_as_message'))
+                    <div class="mb-4 bg-blue-100 border border-blue-200 text-blue-700 px-4 py-3 rounded relative" role="alert">
+                        <i class="fas fa-info-circle mr-2"></i>
+                        <span class="block sm:inline">{{ session('login_as_message') }}</span>
+                    </div>
+                @endif
+
                 @if (isset($header))
                     <div class="mb-6">
                         {{ $header }}

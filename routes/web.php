@@ -6,7 +6,7 @@ use App\Livewire\About;
 use App\Livewire\Blog;
 use App\Livewire\BlogDetail;
 use App\Livewire\Admin\Dashboard;
-use App\Livewire\Admin\UserController;
+use App\Livewire\UserManagement\Index as UserManagement;
 use App\Livewire\Admin\GalleryController;
 use App\Livewire\Admin\BlogController as AdminBlogController;
 use App\Livewire\Admin\FooterController;
@@ -31,7 +31,7 @@ Route::middleware(['auth:sanctum', 'verified'])->prefix('admin')->name('admin.')
     
     // User Management - Only Company Admin and Superadmin
     Route::middleware('permission:manage users')->group(function () {
-        Route::get('/users', UserController::class)->name('users');
+        Route::get('/users', UserManagement::class)->name('users');
     });
 
     Route::middleware('permission:view company profile|edit company address|edit contact info')->group(function () {
