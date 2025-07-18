@@ -23,7 +23,7 @@
                             <nav class="flex-1 px-4 py-6 overflow-y-auto">
                                 <ul class="space-y-2">
                                     <li>
-                                        <a href="{{ route('dashboard') }}" onclick="closeSlideover()"
+                                        <a href="{{ route('admin.dashboard') }}" onclick="closeSlideover()"
                                             class="flex items-center px-4 py-3 text-sm rounded-lg {{ request()->routeIs('dashboard') ? 'bg-gray-700 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} transition-colors duration-200">
                                             <i class="fas fa-tachometer-alt mr-3 w-5"></i>
                                             Dashboard

@@ -18,16 +18,13 @@ Route::view('/home', 'home');
 // Test route for footer
 Route::get('/footer-test', [FooterController::class, 'index'])->name('footer.test');
 
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified',
-])->group(function () {
-    Route::get('/dashboard', Dashboard::class)->name('dashboard');
-});
-
 // Admin routes dengan permission middleware
 Route::middleware(['auth:sanctum', 'verified'])->prefix('admin')->name('admin.')->group(function () {
+    
+    // Dashboard - Requires view dashboard permission
+    Route::middleware('permission:view dashboard')->group(function () {
+        Route::get('/dashboard', Dashboard::class)->name('dashboard');
+    });
     
     // User Management - Only Company Admin and Superadmin
     Route::middleware('permission:manage users')->group(function () {

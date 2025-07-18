@@ -26,7 +26,8 @@ class Index extends Component
 
     public function render()
     {
-        $query = User::with('roles');
+        $query = User::with('roles')
+                     ->where('id', '!=', auth()->id()); // Exclude current logged-in user
         
         if (!empty($this->search)) {
             $query->where(function($q) {

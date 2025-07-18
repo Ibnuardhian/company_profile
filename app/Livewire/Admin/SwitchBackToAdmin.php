@@ -29,7 +29,7 @@ class SwitchBackToAdmin extends Component
                 
                 session()->flash('login_as_message', 'Switched back to admin account');
                 
-                return redirect()->route('dashboard');
+                return redirect()->route('admin.dashboard');
             }
         }
         

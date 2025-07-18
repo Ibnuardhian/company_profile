@@ -97,7 +97,7 @@ class UserDetail extends Component
         // Flash message untuk notifikasi
         session()->flash('login_as_message', 'You are now logged in as ' . $this->user->name);
         
-        return redirect()->route('dashboard');
+        return redirect()->route('admin.dashboard');
     }
 
     public function switchBackToAdmin()
@@ -122,7 +122,7 @@ class UserDetail extends Component
                 
                 session()->flash('login_as_message', 'Switched back to admin account');
                 
-                return redirect()->route('dashboard');
+                return redirect()->route('admin.dashboard');
             }
         }
         

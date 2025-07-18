@@ -30,7 +30,7 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center justify-center mb-2 mt-2">
                     @if (Auth::check())
-                        <a href="{{ route('dashboard') }}">
+                        <a href="{{ route('admin.dashboard') }}">
                             <x-application-mark class="block h-9 w-auto" />
                         </a>
                     @else
@@ -61,7 +61,7 @@
                         Hubungi Kami
                     </x-nav-link>
                     @if (Auth::check())
-                        <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
+                        <x-nav-link href="{{ route('admin.dashboard') }}" :active="request()->routeIs('admin.dashboard')">
                             {{ __('Dashboard') }}
                         </x-nav-link>
                     @endif
@@ -223,7 +223,7 @@
                 Hubungi Kami
             </x-responsive-nav-link>
             @if (Auth::check())
-                <x-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
+                <x-responsive-nav-link href="{{ route('admin.dashboard') }}" :active="request()->routeIs('admin.dashboard')">
                     {{ __('Dashboard') }}
                 </x-responsive-nav-link>
             @endif
