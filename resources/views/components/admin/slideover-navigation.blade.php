@@ -61,6 +61,22 @@
                                             Gallery
                                         </a>
                                     </li>
+                                    @can('manage faq')
+                                        <li>
+                                            <a href="{{ route('admin.faq') }}" onclick="closeSlideover()"
+                                                class="flex items-center px-4 py-3 text-sm rounded-lg {{ request()->routeIs('admin.faq') ? 'bg-gray-700 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} transition-colors duration-200">
+                                                <i class="fas fa-question-circle mr-3 w-5"></i>
+                                                FAQ
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('admin.faq.categories') }}" onclick="closeSlideover()"
+                                                class="flex items-center px-4 py-3 text-sm rounded-lg {{ request()->routeIs('admin.faq.categories') ? 'bg-gray-700 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} transition-colors duration-200">
+                                                <i class="fas fa-folder mr-3 w-5"></i>
+                                                FAQ Categories
+                                            </a>
+                                        </li>
+                                    @endcan
                                     <li>
                                         <a href="#" onclick="closeSlideover()"
                                             class="flex items-center px-4 py-3 text-sm rounded-lg text-gray-300 hover:bg-gray-700 hover:text-white transition-colors duration-200">

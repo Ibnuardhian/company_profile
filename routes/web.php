@@ -79,9 +79,8 @@ Route::middleware(['auth:sanctum', 'verified'])->prefix('admin')->name('admin.')
 
     // FAQ Management
     Route::middleware('permission:manage faq')->group(function () {
-        Route::get('/faq', function() {
-            return view('livewire.admin.faq');
-        })->name('faq');
+        Route::get('/faq', \App\Livewire\Admin\Faq::class)->name('faq');
+        Route::get('/faq-categories', \App\Livewire\Admin\FaqCategory::class)->name('faq.categories');
     });
 });
 

@@ -153,7 +153,6 @@ php artisan db:seed --class=RolePermissionSeeder
 app/
 ├── Livewire/
 │   └── Admin/
-│       ├── UserController.php
 │       ├── GalleryController.php
 │       ├── BlogController.php
 │       └── CompanyProfileController.php
