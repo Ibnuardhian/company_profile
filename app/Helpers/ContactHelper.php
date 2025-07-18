@@ -46,3 +46,25 @@ if (!function_exists('getContactLink')) {
         }
     }
 }
+
+if (!function_exists('getFirstLogo')) {
+    function getFirstLogo() {
+        $logoPath = public_path('storage/logos');
+        
+        if (!is_dir($logoPath)) {
+            return null;
+        }
+        
+        $files = glob($logoPath . '/*.{jpg,jpeg,png,gif,webp,svg}', GLOB_BRACE);
+        
+        if (empty($files)) {
+            return null;
+        }
+        
+        // Ambil file pertama
+        $firstFile = $files[0];
+        $filename = basename($firstFile);
+        
+        return asset('storage/logos/' . $filename);
+    }
+}
