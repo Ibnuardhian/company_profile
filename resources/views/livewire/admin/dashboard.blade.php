@@ -109,7 +109,7 @@
     </div>
 
     <!-- Charts and Recent Activity -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-3">
         <!-- Recent Activity -->
         <div class="bg-white rounded-lg shadow mb-3">
             <div class="px-6 py-4 border-b border-gray-200">
