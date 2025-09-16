@@ -238,7 +238,9 @@
         <div class="px-6 py-4 border-b border-gray-200">
             <div class="flex items-center justify-between">
                 <h3 class="text-lg font-medium text-gray-900">Recent Users</h3>
-                <a href="#" class="text-sm text-blue-600 hover:text-blue-800">View all</a>
+                <button wire:click="$refresh" type="button" class="text-sm text-blue-600 hover:text-blue-800 focus:outline-none">
+                    <i class="fas fa-sync-alt mr-1"></i> Refresh
+                </button>
             </div>
         </div>
         <div class="overflow-x-auto">
@@ -250,7 +252,7 @@
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Joined</th>
+                            Last Login</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Status</th>
                         <th class="relative px-6 py-3"><span class="sr-only">Edit</span></th>
@@ -275,13 +277,18 @@
                                 <div class="text-sm text-gray-900">{{ $user->email }}</div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                {{ $user->created_at->format('M d, Y') }}
+                                {{ $user->last_login ?? '-' }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <span
-                                    class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
-                                    Active
-                                </span>
+                                @if($user->is_active)
+                                    <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
+                                        Active
+                                    </span>
+                                @else
+                                    <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800">
+                                        Inactive
+                                    </span>
+                                @endif
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                 <a href="#" class="text-blue-600 hover:text-blue-900">Edit</a>
