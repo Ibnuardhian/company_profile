@@ -9,6 +9,8 @@ use App\Livewire\Admin\Dashboard;
 use App\Livewire\UserManagement\Index as UserManagement;
 use App\Livewire\Admin\GalleryController;
 use App\Livewire\Admin\BlogController as AdminBlogController;
+use App\Livewire\Admin\FaqCategory;
+use App\Livewire\Admin\Faq;
 use App\Livewire\Admin\FooterController;
 
 Route::view('/', 'home')->name('home');
@@ -79,8 +81,12 @@ Route::middleware(['auth:sanctum', 'verified'])->prefix('admin')->name('admin.')
 
     // FAQ Management
     Route::middleware('permission:manage faq')->group(function () {
-        Route::get('/faq', \App\Livewire\Admin\Faq::class)->name('faq');
-        Route::get('/faq-categories', \App\Livewire\Admin\FaqCategory::class)->name('faq.categories');
+        Route::get('/faq', Faq::class)->name('faq');
+    });
+    
+    // FAQ Categories Management
+    Route::middleware('permission:manage faq categories')->group(function () {
+        Route::get('/faq-categories', FaqCategory::class)->name('faq.categories');
     });
 });
 

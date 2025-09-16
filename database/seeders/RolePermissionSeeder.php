@@ -45,6 +45,7 @@ class RolePermissionSeeder extends Seeder
             'edit contact info',
 
             // FAQ Management
+            'manage faq categories',
             'manage faq',
 
             // Dashboard Access
@@ -72,6 +73,7 @@ class RolePermissionSeeder extends Seeder
             'manage pricing catalog',
             'manage blog',
             'view blog', 
+            'manage faq categories',
             'manage faq',
             'view dashboard',
         ]);
